@@ -126,12 +126,14 @@ class BaseSettings(UserSettingsHolder):
     # Database
     # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    @properties
+    def DATABASES(self):
+        return {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': os.path.join(self.BASE_DIR, 'db.sqlite3'),
+            }
         }
-    }
 
     # Internationalization
     # https://docs.djangoproject.com/en/1.6/topics/i18n/
