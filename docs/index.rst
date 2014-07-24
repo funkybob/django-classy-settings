@@ -15,6 +15,15 @@ Django project, without ever copying values.
 Interdependant values, values sourced from the env, even calculated values are
 no problem, since you have the full power of Python and its classes.
 
+
+Contents
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   simple
+
 Quickstart
 ----------
 
