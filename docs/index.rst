@@ -28,13 +28,7 @@ Contents
 Quickstart
 ----------
 
-Make a settings module:
-
-.. code-block:: sh
-
-    mkdir settings
-
-Create your core settings:
+Replace your default ``settings.py``:
 
 .. code-block:: python
 
@@ -62,14 +56,9 @@ Finally, activate the setting you want:
 
 .. code-block:: python
 
-    # By class
-    cbs.activate(LocalSettings)
-
-    # By name
-    cbs.activate('StagingSettings')
-
-    # By import
-    cbs.activate('myproj.settings.staging.StagingSettings')
+    import os
+    MODE = os.environ.get('DJANGO_MODE', 'Local')
+    cbs.activate('{}Settings'.format(MODE.title()))
 
 
 Helpers
