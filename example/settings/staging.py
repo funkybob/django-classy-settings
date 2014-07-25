@@ -3,6 +3,7 @@ from .base import BaseSettings
 
 import os
 
+
 class StagingSettings(BaseSettings):
 
     DOCROOT = '/path/to/docroot/'
@@ -14,4 +15,3 @@ class StagingSettings(BaseSettings):
     @property
     def MEDIA_ROOT(self):
         return os.path.join(self.DOCROOT, 'media', '')
-
