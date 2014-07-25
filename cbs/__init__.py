@@ -1,7 +1,8 @@
 
 from functools import partial
 import importlib
-import os.environ
+import inspect
+import os
 import six
 
 from django.conf import UserSettingsHolder
@@ -87,7 +88,7 @@ def apply(name, to):
     })
 
 
-class BaseSettings(UserSettingsHolder):
+class BaseSettings(object):
     '''
     A standard Django 1.6 setting
 
@@ -98,7 +99,7 @@ class BaseSettings(UserSettingsHolder):
 
     @property
     def BASE_DIR(self):
-        return os.path.dirname(os.path.dirname(self.__class__.__file__))
+        return os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(self.__class__))))
 
     @property
     def TEMPLATE_DEBUG(self):
