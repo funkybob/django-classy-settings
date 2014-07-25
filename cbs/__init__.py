@@ -5,8 +5,6 @@ import inspect
 import os
 import six
 
-from django.conf import UserSettingsHolder
-
 
 class env(object):
     '''
@@ -99,7 +97,11 @@ class BaseSettings(object):
 
     @property
     def BASE_DIR(self):
-        return os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(self.__class__))))
+        return os.path.dirname(
+            os.path.dirname(
+                os.path.abspath(inspect.getfile(self.__class__))
+            )
+        )
 
     @property
     def TEMPLATE_DEBUG(self):
