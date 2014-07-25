@@ -52,13 +52,13 @@ Derive testing/staging/production settings:
     class ProductionSettings(StagingSettings):
         DEBUG = False
 
-Finally, activate the setting you want:
+Finally, apply the setting you want:
 
 .. code-block:: python
 
     import os
     MODE = os.environ.get('DJANGO_MODE', 'Local')
-    cbs.activate('{}Settings'.format(MODE.title()))
+    cbs.apply('{}Settings'.format(MODE.title()), globals())
 
 
 Helpers

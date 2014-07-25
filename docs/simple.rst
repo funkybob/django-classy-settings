@@ -40,7 +40,7 @@ Make a settings directory, and into __init__.py put:
 
 
     MODE = os.environ.get('DJANGO_MODE', 'Local')
-    cbs.activate('{}Settings'.format(MODE.title()))
+    cbs.apply('{}Settings'.format(MODE.title()), globals())
 
 Now, you can set DJANGO_MODE in your environment to the settings you want to run.
 

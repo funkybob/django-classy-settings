@@ -1,8 +1,8 @@
 
 import os
 
-from cbs import activate
+import cbs
 
 mode = os.environ.get('DJANGO_MODE', 'Local')
 
-activate('settings.{}.{}Settings'.format(mode.lower(), mode.title()))
+cbs.apply('settings.{}.{}Settings'.format(mode.lower(), mode.title()), globals())

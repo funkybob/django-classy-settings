@@ -4,7 +4,7 @@ import importlib
 import os.environ
 import six
 
-from django.conf import global_settings, UserSettingsHolder, settings
+from django.conf import UserSettingsHolder
 
 
 class env(object):
@@ -51,19 +51,22 @@ class env(object):
         return value
 
 
-def activate(name):
+def apply(name, to):
     '''
-    specify which settings to use.
+    Apply settings to ``to``, which is expected to be globals().
 
-    Uses:
+    Place at the end of settings.py / settings/__init__.py to apply a given
+    settings class.
+
     Pass a settings class:
-        cbs.activate(MySettings)
+        cbs.apply(MySettings, globals())
 
-    Pass the name of a local settings class:
-        cbs.activate('MySettings')
+    Pass a class name:
+        cbs.apply('MySettings', globals())
 
     Pass an import path:
-        cbs.activate('settings.MySettings')
+        cbs.apply('settings.my.MySettings', globals())
+
     '''
     if isinstance(name, six.string_types):
         if '.' in name:
@@ -71,11 +74,17 @@ def activate(name):
             module = importlib.import_module(module)
             obj = getattr(module, name)
         else:
-            obj = globals().get(name)
+            obj = to.get(name)
     else:
         obj = name
 
-    settings._wrapped = obj(global_settings)
+    settings = obj()
+
+    to.update({
+        key: getattr(settings.obj)
+        for key in dir(settings)
+        if key == key.upper()
+    })
 
 
 class BaseSettings(UserSettingsHolder):
