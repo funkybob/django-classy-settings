@@ -25,31 +25,6 @@ alter.
         DOCTOOR = '/path/to/different/docroot/'
 
 
-Cache expensive properties
---------------------------
-
-If you have a setting that is calculated and is accessed frequently, you can
-speed it up by using Django's ``cached_property`` decorator.  This will ensure
-the value is only calculated once, then stored on the settings instance where
-Python will find it in future.
-
-.. code-block:: python
-
-    from django.utils.functional import cached_property
-
-
-    class BaseSettings(cbs.BaseSettings):
-
-        @cached_property
-        def DATABASES(self):
-            import json
-
-            with open('database.json', 'rb') as fin:
-                return json.load(fin)
-
-Remember that sometimes, even if a value is quick to calculate, if it's accessed
-frequently it can be worthwhile caching it.
-
 Composition over Inheritance
 ----------------------------
 

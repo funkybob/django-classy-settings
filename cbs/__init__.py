@@ -79,8 +79,13 @@ def apply(name, to):
 
     settings = obj()
 
+    def resolve_callable(value):
+        if callable(value):
+            return value()
+        return value
+
     to.update({
-        key: getattr(settings.obj)
+        key: resolve_callable(getattr(settings.obj))
         for key in dir(settings)
         if key == key.upper()
     })

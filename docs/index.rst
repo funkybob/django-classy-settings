@@ -52,6 +52,9 @@ Derive testing/staging/production settings:
     class ProductionSettings(StagingSettings):
         DEBUG = False
 
+Any upper-case properties will be included in your settings.  Any methods which
+match this will be called to yield their values.
+
 Finally, apply the setting you want:
 
 .. code-block:: python
