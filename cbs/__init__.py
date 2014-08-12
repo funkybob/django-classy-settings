@@ -45,7 +45,7 @@ class env(object):
         try:
             value = os.environ[self.key]
         except KeyError:
-            value = self.getter()
+            value = self.getter(self)
         obj.__dict__[self.getter.__name__] = value
         return value
 
@@ -85,7 +85,7 @@ def apply(name, to):
         return value
 
     to.update({
-        key: resolve_callable(getattr(settings.obj))
+        key: resolve_callable(getattr(settings, key))
         for key in dir(settings)
         if key == key.upper()
     })
