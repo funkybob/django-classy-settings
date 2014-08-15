@@ -22,7 +22,7 @@ alter.
 
     class ProductionSettings(StagingSettings):
 
-        DOCTOOR = '/path/to/different/docroot/'
+        DOCROOT = '/path/to/different/docroot/'
 
 
 Composition over Inheritance
