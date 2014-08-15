@@ -87,3 +87,18 @@ We all like moving settings into the ENV, right?  So, here's a helper.
         @cbs.env(prefix='DJANGO_')
         def SECRET(self):
             return 'default-dummy-secret'
+
+You can override the default prefix of '' by setting ``cbs.DEFAULT_ENV_PREFIX``
+
+.. code-block:: python
+
+   import cbs
+
+   cbs.DEFAULT_ENV_PREFIX = 'DJANGO_'
+
+   class Settings(BaseSettings):
+       @cbs.env
+       def SECRET(self):
+           '''Gets its value from os.environ['DJANGO_SECRET']'''
+            return 'dummy-secret'
+
