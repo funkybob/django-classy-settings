@@ -3,8 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Django Classy Settings's documentation!
-==================================================
+Django Classy Settings
+======================
+
+.. rubric:: Stay classy, Django.
 
 Overview
 --------
@@ -114,3 +116,22 @@ The recommended pattern for env settings that are required is to raise
        @cbs.env
        def SECRET(self):
            raise ImproperlyConfigured('You must specify SECRET in env')
+
+
+Finally, because ``cbs.env`` is also a decorator factory, you can create
+decorators for each prefix you need, if you have many.
+
+.. code-block:: python
+
+   denv = cbs.env(prefix='DJANGO_')
+   ppenv = cbs.env(prefix='PAYPAL_')
+
+   class BaseSettings(cbs.BaseSettings):
+       @denv
+       def SECRET(self):
+           return 'dummy-secret'
+
+       @ppenv
+       def API_USERNAME(self):
+           return 'test@paypal.com'
+
