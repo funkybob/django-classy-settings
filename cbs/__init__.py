@@ -6,6 +6,9 @@ import os
 import six
 
 
+DEFAULT_ENV_PREFIX = ''
+
+
 class env(object):
     '''
     Decorator to make environ based settings simpler.
@@ -34,10 +37,10 @@ class env(object):
             return partial(env, **kwargs)
         return object.__new__(cls)
 
-    def __init__(self, getter, key=None, prefix=None):
+    def __init__(self, getter, key=None, prefix=DEFAULT_ENV_PREFIX):
         self.getter = getter
         key = key or getter.__name__
-        self.key = key if prefix is None else ''.join([prefix, key])
+        self.key = ''.join([prefix, key])
 
     def __get__(self, obj, type=None):
         if obj is None:
