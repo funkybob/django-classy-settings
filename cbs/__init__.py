@@ -72,13 +72,16 @@ def apply(name, to):
     '''
     if isinstance(name, six.string_types):
         if '.' in name:
-            module, name = name.rsplit('.')
+            module, obj_name = name.rsplit('.')
             module = importlib.import_module(module)
-            obj = getattr(module, name)
+            obj = getattr(module, obj_name)
         else:
             obj = to.get(name)
     else:
         obj = name
+
+    if obj is None:
+        raise ValueError('Could not find settings class: %r', name)
 
     settings = obj()
 
