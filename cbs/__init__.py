@@ -72,7 +72,7 @@ def apply(name, to):
     '''
     if isinstance(name, six.string_types):
         if '.' in name:
-            module, obj_name = name.rsplit('.')
+            module, obj_name = name.rsplit('.', 1)
             module = importlib.import_module(module)
             obj = getattr(module, obj_name)
         else:
