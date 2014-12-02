@@ -26,6 +26,7 @@ Contents
 
    tips
    simple
+   api
 
 Quickstart
 ----------
