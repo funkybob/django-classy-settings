@@ -13,8 +13,8 @@ setup(
         'Framework :: Django',
         'Intended Audience :: Developers',
     ],
-    requires=[
-        'Django (>=1.6)',
-        'six (>=1.7.3)',
+    install_requires=[
+        'Django>=1.6',
+        'six>=1.7.3',
     ],
 )
