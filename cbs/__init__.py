@@ -3,7 +3,8 @@ from functools import partial
 import importlib
 import inspect
 import os
-import six
+
+from django.utils import six
 
 
 DEFAULT_ENV_PREFIX = ''

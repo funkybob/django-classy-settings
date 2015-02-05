@@ -15,6 +15,5 @@ setup(
     ],
     requires=[
         'Django (>=1.6)',
-        'six (>=1.7.3)',
     ],
 )
