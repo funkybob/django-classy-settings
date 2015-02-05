@@ -27,6 +27,7 @@ Contents
    tips
    simple
    api
+   changelog
 
 Quickstart
 ----------
