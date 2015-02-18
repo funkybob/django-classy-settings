@@ -54,6 +54,22 @@ class env(object):
         return value
 
 
+class envbool(env):
+    '''
+    A special case of env that returns a boolean.
+    '''
+    def __get__(self, obj, type=None):
+        value = super(envbool, self).__get__(obj, type=type)
+        if isinstance(value, bool):
+            return value
+        value = value.strip().lower()
+        if value in ('y', 'yes', 'on', 't', 'true', '1'):
+            return True
+        if value in ('n', 'no', 'off', 'f', 'false', '0'):
+            return False
+        raise ValueError('Unrecognised value for bool: %r' % value)
+
+
 def apply(name, to):
     '''
     Apply settings to ``to``, which is expected to be globals().

@@ -120,7 +120,7 @@ The recommended pattern for env settings that are required is to raise
            raise ImproperlyConfigured('You must specify SECRET in env')
 
 
-Finally, because ``cbs.env`` is also a decorator factory, you can create
+Next, because ``cbs.env`` is also a decorator factory, you can create
 decorators for each prefix you need, if you have many.
 
 .. code-block:: python
@@ -136,4 +136,18 @@ decorators for each prefix you need, if you have many.
        @ppenv
        def API_USERNAME(self):
            return 'test@paypal.com'
+
+
+As an additional helper, there is ``cbs.boolenv`` which subclasses ``cbs.env``
+and tries to cast values from the environment to bools.
+
+Once the value is stripped and lower-cased, it is tested against two lists:
+
+True::
+    'y', 'yes', 'on', 't', 'true', '1'
+
+False::
+    'n', 'no', 'off', 'f', 'false', '0'
+
+Any other value will raise a ValueError.
 
