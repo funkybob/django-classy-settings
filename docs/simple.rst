@@ -37,8 +37,8 @@ Make a settings directory, and into __init__.py put:
         DEBUG = False
 
 
-    MODE = os.environ.get('DJANGO_MODE', 'Local')
-    cbs.apply('{}Settings'.format(MODE.title()), globals())
+    MODE = os.environ.get('DJANGO_MODE', 'Local').title()
+    cbs.apply('{}Settings'.format(MODE), globals())
 
 Now, you can set DJANGO_MODE in your environment to the settings you want to run.
 
