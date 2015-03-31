@@ -138,10 +138,23 @@ decorators for each prefix you need, if you have many.
            return 'test@paypal.com'
 
 
-As an additional helper, there is ``cbs.boolenv`` which subclasses ``cbs.env``
-and tries to cast values from the environment to bools.
+Also, you can pass a type casting callable to convert the string to whatever
+you need, as well as affect validation.  Built in is ``as_bool`` to
+intelligently cast value to bool.
 
-Once the value is stripped and lower-cased, it is tested against two lists:
+.. code-block:: python
+
+   class BaseSettings(cbs.BaseSettings):
+
+       @cbs.env(type=int)
+       def COUNT_LIMIT(self):
+           return 6
+
+As an additional helper, there is ``cbs.boolenv`` which subclasses ``cbs.env``
+and sets `type` to ``as_bool``.
+
+Once the value is stripped and lower-cased, ``as_bool`` tests it against two
+lists:
 
 True::
     'y', 'yes', 'on', 't', 'true', '1'
@@ -150,4 +163,34 @@ False::
     'n', 'no', 'off', 'f', 'false', '0'
 
 Any other value will raise a ValueError.
+
+
+Feature Toggles
+---------------
+
+As a final helper, there's a context processor for adding settings.TOGGLES to
+the context, and a function to product a dict of values with defaults.
+
+This is intended to ease addition of feature toggles to your app, controlled by
+environment variables.
+
+.. code-block:: python
+
+   import cbs
+   from cbs.toggle import toggles
+
+   class BaseSettings(csb.BaseSettings):
+
+       def TOGGLES(self):
+           return toggles(FEATURE_ONE=True, PAY_FOR_FEATURE=False)
+
+       @property
+       def CONTEXT_PROCESSORS(self):
+           return super(BaseSettings).CONTEXT_PROCESSORS + [
+               'cbs.context_processors.toggles',
+           ]
+
+This will produce a dict containing a key for each argument.  The value will be
+from os.environ['TOGGLE_{key}'] if it exists, passed through ``as_bool``, or
+the value if it is not set.
 

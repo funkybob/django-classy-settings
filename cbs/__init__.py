@@ -6,6 +6,8 @@ import os
 
 from django.utils import six
 
+from .utils import as_bool
+
 
 DEFAULT_ENV_PREFIX = ''
 
@@ -32,14 +34,20 @@ class env(object):
         ...
 
     ``key`` and ``prefix`` can be used together.
+
+    You can pass a type caster / validator:
+
+    @env(type=int)
+    def SETTING(self):
     '''
     def __new__(cls, *args, **kwargs):
         if not args:
             return partial(env, **kwargs)
         return object.__new__(cls)
 
-    def __init__(self, getter, key=None, prefix=DEFAULT_ENV_PREFIX):
+    def __init__(self, getter, key=None, type=None, prefix=DEFAULT_ENV_PREFIX):
         self.getter = getter
+        self.type = type
         key = key or getter.__name__
         self.key = ''.join([prefix, key])
 
@@ -51,6 +59,8 @@ class env(object):
         except KeyError:
             value = self.getter(self)
         obj.__dict__[self.getter.__name__] = value
+        if self.type:
+            value = self.type(value)
         return value
 
 
@@ -58,16 +68,9 @@ class envbool(env):
     '''
     A special case of env that returns a boolean.
     '''
-    def __get__(self, obj, type=None):
-        value = super(envbool, self).__get__(obj, type=type)
-        if isinstance(value, bool):
-            return value
-        value = value.strip().lower()
-        if value in ('y', 'yes', 'on', 't', 'true', '1'):
-            return True
-        if value in ('n', 'no', 'off', 'f', 'false', '0'):
-            return False
-        raise ValueError('Unrecognised value for bool: %r' % value)
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault(type=as_bool)
+        super(envbool, self).__init__(*args, **kwargs)
 
 
 def apply(name, to):
@@ -335,9 +338,6 @@ class Base18Settings(CoreSettings):
 
 from django import VERSION
 
-BASE_MAP = {
-    (1, 6): Base16Settings,
-    (1, 7): Base17Settings,
-    (1, 8): Base18Settings,
-}
-BaseSettings = BASE_MAP.get(VERSION[:2], Base16Settings)
+base = importlib.import_module('cbs.base.django{}{}'.format(*VERSION[:2]))
+
+BaseSettings = getattr(base, 'Base{}{}Settings'.format(*VERSION[:2]))
