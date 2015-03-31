@@ -7,7 +7,10 @@ setup(
     description='Simple class-based settings for Django',
     author='Curtis Maloney',
     author_email='curtis@tinbrain.net',
-    packages=['cbs',],
+    packages=[
+        'cbs',
+        'cbs.base',
+    ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: Django',
