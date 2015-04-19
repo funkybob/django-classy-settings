@@ -194,3 +194,33 @@ This will produce a dict containing a key for each argument.  The value will be
 from os.environ['TOGGLE_{key}'] if it exists, passed through ``as_bool``, or
 the value if it is not set.
 
+
+Extending Middleware or Installed Apps
+--------------------------------------
+
+To extend MIDDLEWARE_CLASSES (or INSTALLED_APPS) in a specific environment, adapt the following:
+
+.. code-block:: python
+
+   class LocalSettings(BaseSettings):
+
+       DEBUG = True
+
+       @property
+       def MIDDLEWARE_CLASSES(self):
+           """Add middleware specific to local development."""
+           middleware = super(LocalSettings, self).MIDDLEWARE_CLASSES
+
+           for (pkg, pth) in [
+               # add your classes here:
+               ('chromelogger', 'chromelogger.DjangoMiddleware'),
+           ]:
+               try:
+                   __import__(pkg)
+                   middleware += (
+                       pth,
+                   )
+               except ImportError:
+                   pass
+           return middleware
+
