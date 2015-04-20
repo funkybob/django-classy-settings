@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+1.1.0 (2015-03-31)
+------------------
+
+Features Added:
+
++ Added type casting to @cbs.env
++ Added Django 1.8 default settings
++ Move settings into separate modules
++ Added Feature Toggle tool.
+
 1.0.3 (2015-02-18)
 ------------------
 
