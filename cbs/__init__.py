@@ -45,10 +45,12 @@ class env(object):
             return partial(env, **kwargs)
         return object.__new__(cls)
 
-    def __init__(self, getter, key=None, type=None, prefix=DEFAULT_ENV_PREFIX):
+    def __init__(self, getter, key=None, type=None, prefix=None):
         self.getter = getter
         self.type = type
         key = key or getter.__name__
+        if prefix is None:
+            prefix = DEFAULT_ENV_PREFIX
         self.key = ''.join([prefix, key])
 
     def __get__(self, obj, type=None):
