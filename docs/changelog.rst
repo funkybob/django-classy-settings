@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+1.1.1 (????-??-??)
+------------------
+
+Features Added:
+
++ Added tests (Thanks David Sanders)
+
 1.1.0 (2015-03-31)
 ------------------
 
