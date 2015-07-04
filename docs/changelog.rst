@@ -8,6 +8,11 @@ Features Added:
 
 + Added tests (Thanks David Sanders)
 
+Bugs Fixed
+
+- Fixed bug where we passed the env class instead of the settings object to the
+  default method.
+
 1.1.0 (2015-03-31)
 ------------------
 
