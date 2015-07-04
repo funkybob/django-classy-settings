@@ -54,3 +54,14 @@ class TestEnv(unittest.TestCase):
 
         os.environ['DJANGO_SETTING'] = 'foo'
         self.assertEqual(Settings().SETTING, 'foo')
+
+    def test_refer_to_other_setting(self):
+
+        class Settings:
+            OTHER = True
+
+            @cbs.env
+            def SETTING(self):
+                return self.OTHER
+
+        self.assertEqual(Settings().SETTING, True)

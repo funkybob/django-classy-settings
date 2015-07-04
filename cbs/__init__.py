@@ -59,7 +59,7 @@ class env(object):
         try:
             value = os.environ[self.key]
         except KeyError:
-            value = self.getter(self)
+            value = self.getter(obj)
         obj.__dict__[self.getter.__name__] = value
         if self.type:
             value = self.type(value)
