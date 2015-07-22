@@ -12,6 +12,7 @@ Bugs Fixed
 
 - Fixed bug where we passed the env class instead of the settings object to the
   default method.
+- Type-cast values before caching
 
 1.1.0 (2015-03-31)
 ------------------
