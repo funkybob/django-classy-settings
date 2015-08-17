@@ -157,9 +157,11 @@ Once the value is stripped and lower-cased, ``as_bool`` tests it against two
 lists:
 
 True::
+
     'y', 'yes', 'on', 't', 'true', '1'
 
 False::
+
     'n', 'no', 'off', 'f', 'false', '0'
 
 Any other value will raise a ValueError.
