@@ -1,14 +1,20 @@
 Change Log
 ==========
 
+1.1.3 (2015-08-19)
+------------------
+
+Bugs Fixed:
+
+- Moved TEMPLATE_DEBUG setting to Django 1.6/1.7 settings, as it's no longer
+  valid in Django 1.8.
+
 1.1.2 (2015-07-22)
 ------------------
 
-Bugs Fixed
+Bugs Fixed:
 
 - Type-cast values before caching
-- Moved TEMPLATE_DEBUG setting to Django 1.6/1.7 settings, as it's no longer
-  valid in Django 1.8.
 
 1.1.1 (2015-07-04)
 ------------------
@@ -17,7 +23,7 @@ Features Added:
 
 + Added tests (Thanks David Sanders)
 
-Bugs Fixed
+Bugs Fixed:
 
 - Fixed bug where we passed the env class instead of the settings object to the
   default method.
