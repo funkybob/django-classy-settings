@@ -11,6 +11,10 @@ class Base16Settings(CoreSettings):
     You must sub-class this and define PROJECT_NAME
     '''
 
+    @property
+    def TEMPLATE_DEBUG(self):
+        return self.DEBUG
+
     INSTALLED_APPS = (
         'django.contrib.admin',
         'django.contrib.auth',

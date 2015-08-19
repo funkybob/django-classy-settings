@@ -18,10 +18,6 @@ class CoreSettings(object):
 
     DEBUG = True
 
-    @property
-    def TEMPLATE_DEBUG(self):
-        return self.DEBUG
-
     ALLOWED_HOSTS = []
 
     @property

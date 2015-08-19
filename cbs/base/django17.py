@@ -8,6 +8,10 @@ class Base17Settings(CoreSettings):
 
     # Application definition
 
+    @property
+    def TEMPLATE_DEBUG(self):
+        return self.DEBUG
+
     INSTALLED_APPS = (
         'django.contrib.admin',
         'django.contrib.auth',
