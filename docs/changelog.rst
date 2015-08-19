@@ -7,6 +7,8 @@ Change Log
 Bugs Fixed
 
 - Type-cast values before caching
+- Moved TEMPLATE_DEBUG setting to Django 1.6/1.7 settings, as it's no longer
+  valid in Django 1.8.
 
 1.1.1 (2015-07-04)
 ------------------
