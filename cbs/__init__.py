@@ -60,8 +60,9 @@ class env(object):
             value = os.environ[self.key]
         except KeyError:
             value = self.getter(obj)
-        if self.type:
-            value = self.type(value)
+        else:
+            if self.type:
+                value = self.type(value)
         obj.__dict__[self.getter.__name__] = value
         return value
 
