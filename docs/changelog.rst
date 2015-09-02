@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+1.1.4 (2015-??-??)
+------------------
+
+Bugs Fixed:
+
+- Only apply type cast in @env to values sourced from environment.
+
 1.1.3 (2015-08-19)
 ------------------
 
