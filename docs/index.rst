@@ -150,7 +150,7 @@ intelligently cast value to bool.
        def COUNT_LIMIT(self):
            return 6
 
-As an additional helper, there is ``cbs.boolenv`` which subclasses ``cbs.env``
+As an additional helper, there is ``cbs.envbool`` which subclasses ``cbs.env``
 and sets `type` to ``as_bool``.
 
 Once the value is stripped and lower-cased, ``as_bool`` tests it against two
