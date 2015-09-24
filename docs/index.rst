@@ -11,8 +11,8 @@ Django Classy Settings
 Overview
 --------
 
-Class-based settings make it easy for you to manage multiple settings for your
-Django project, without ever copying values.
+Class-based settings make it easy for you to manage multiple settings profiles
+for your Django project, without ever copying values.
 
 Interdependant values, values sourced from the env, even calculated values are
 no problem, since you have the full power of Python and its classes.
@@ -196,3 +196,24 @@ This will produce a dict containing a key for each argument.  The value will be
 from os.environ['TOGGLE_{key}'] if it exists, passed through ``as_bool``, or
 the value if it is not set.
 
+
+Base classes
+------------
+
+The `BaseSettings` class is automatically chosen based on the installed version of Django.  You can override this by explicitly choosing the verison base:
+
+- cbs.base.django16.Base16Settings
+- cbs.base.django17.Base17Settings
+- cbs.base.django18.Base18Settings
+
+
+Also included is `GlobalSettings`, which pulls in all the default "global" settings from the currently installed version of Django.  This makes it simpler to extend the default settings not included when you run `django-admin startproject`.
+
+.. note::  This class should always be _last_ in your inheritance list.
+
+   .. code-block:: python
+
+      import cbs
+
+      class Settings(cbs.BaseSettings, cbs.GlobalSettings):
+          ...

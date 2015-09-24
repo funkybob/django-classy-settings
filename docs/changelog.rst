@@ -4,6 +4,10 @@ Change Log
 1.1.4 (2015-??-??)
 ------------------
 
+Features Added:
+
+- Added GlobalSettings mixin
+
 Bugs Fixed:
 
 - Only apply type cast in @env to values sourced from environment.
