@@ -1,7 +1,6 @@
 
 from functools import partial
 import importlib
-import inspect
 import os
 
 from django.utils import six
