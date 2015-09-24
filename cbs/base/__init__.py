@@ -27,3 +27,12 @@ class CoreSettings(object):
     @property
     def WSGI_APPLICATION(self):
         return '{}.wsgi.application'.format(self.PROJECT_NAME)
+
+
+class GlobalSettings(object):
+
+    def __init__(self):
+        from django.conf import global_settings
+        for key in dir(global_settings):
+            if key.isupper():
+                setattr(self, key, getattr(global_settings, key))
