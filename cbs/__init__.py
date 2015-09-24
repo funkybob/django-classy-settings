@@ -116,7 +116,7 @@ def apply(name, to):
     to.update({
         key: resolve_callable(getattr(settings, key))
         for key in dir(settings)
-        if key == key.upper()
+        if key.isupper()
     })
 
 
