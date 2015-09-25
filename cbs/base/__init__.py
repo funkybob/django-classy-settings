@@ -31,8 +31,6 @@ class CoreSettings(object):
 
 class GlobalSettings(object):
 
-    def __init__(self):
+    def __getattr__(self, key):
         from django.conf import global_settings
-        for key in dir(global_settings):
-            if key.isupper():
-                setattr(self, key, getattr(global_settings, key))
+        return getattr(global_settings, key)
