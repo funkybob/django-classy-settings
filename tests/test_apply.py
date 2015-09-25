@@ -29,4 +29,4 @@ class TestApply(unittest.TestCase):
         self.assertEqual(PROJECT_NAME, 'fancy_project')
 
     def test_apply_settings_invalid_string_reference(self):
-        self.assertRaises(ValueError, cbs.apply, 'invalid.Class', globals())
+        self.assertRaises(ImportError, cbs.apply, 'invalid.Class', globals())
