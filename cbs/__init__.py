@@ -5,7 +5,7 @@ import os
 
 from django.utils import six
 
-from .base import GlobalSettings
+from .base import GlobalSettings  # noqa
 from .utils import as_bool
 
 
