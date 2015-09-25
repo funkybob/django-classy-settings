@@ -6,6 +6,8 @@ Change Log
 
 Features Added:
 
+- Added Travis CI and tox config files
+- Match Django for detecting settings
 - Added GlobalSettings mixin
 
 Bugs Fixed:
