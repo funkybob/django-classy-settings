@@ -14,6 +14,7 @@ class MySettings(cbs.BaseSettings, cbs.GlobalSettings):
 class GlobalSettingsTest(unittest.TestCase):
 
     def test_precedence(self):
-        cbs.apply(MySettings, globals())
+        g = {}
+        cbs.apply(MySettings, g)
 
-        self.assertTrue(len(TEMPLATE_LOADERS), 3) 
+        self.assertTrue(len(g['TEMPLATE_LOADERS']), 3) 

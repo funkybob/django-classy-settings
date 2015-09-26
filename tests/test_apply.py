@@ -14,19 +14,22 @@ class MethodSettings():
 class TestApply(unittest.TestCase):
 
     def test_apply_settings_attr(self):
-        cbs.apply(AttrSettings, globals())
+        g = {}
+        cbs.apply(AttrSettings, g)
 
-        self.assertEqual(PROJECT_NAME, 'fancy_project')
+        self.assertEqual(g['PROJECT_NAME'], 'fancy_project')
 
     def test_apply_settings_method(self):
-        cbs.apply(MethodSettings, globals())
+        g = {}
+        cbs.apply(MethodSettings, g)
 
-        self.assertEqual(PROJECT_NAME, 'fancy_project')
+        self.assertEqual(g['PROJECT_NAME'], 'fancy_project')
 
     def test_apply_settings_string_reference(self):
-        cbs.apply(__name__ + '.AttrSettings', globals())
+        g = {}
+        cbs.apply(__name__ + '.AttrSettings', g)
 
-        self.assertEqual(PROJECT_NAME, 'fancy_project')
+        self.assertEqual(g['PROJECT_NAME'], 'fancy_project')
 
     def test_apply_settings_invalid_string_reference(self):
-        self.assertRaises(ImportError, cbs.apply, 'invalid.Class', globals())
+        self.assertRaises(ImportError, cbs.apply, 'invalid.Class', {})
