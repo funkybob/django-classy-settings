@@ -25,11 +25,20 @@ class TestApply(unittest.TestCase):
 
         self.assertEqual(g['PROJECT_NAME'], 'fancy_project')
 
+    def test_apply_settings_string_local(self):
+        g = {'AttrSettings': AttrSettings}
+        cbs.apply('AttrSettings', g)
+
+        self.assertEqual(g['PROJECT_NAME'], 'fancy_project')
+
     def test_apply_settings_string_reference(self):
         g = {}
         cbs.apply(__name__ + '.AttrSettings', g)
 
         self.assertEqual(g['PROJECT_NAME'], 'fancy_project')
+
+    def test_apply_settings_invalid_string_local(self):
+        self.assertRaises(ValueError, cbs.apply, 'LocalSettings', {})
 
     def test_apply_settings_invalid_string_reference(self):
         self.assertRaises(ImportError, cbs.apply, 'invalid.Class', {})
