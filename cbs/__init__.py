@@ -72,7 +72,7 @@ class envbool(env):
     A special case of env that returns a boolean.
     '''
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault(type=as_bool)
+        kwargs.setdefault('type', as_bool)
         super(envbool, self).__init__(*args, **kwargs)
 
 

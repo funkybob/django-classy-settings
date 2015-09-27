@@ -13,6 +13,7 @@ Features Added:
 Bugs Fixed:
 
 - Only apply type cast in @env to values sourced from environment.
+- Correct call to setdefault in envbool
 
 1.1.3 (2015-08-19)
 ------------------

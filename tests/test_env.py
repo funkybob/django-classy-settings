@@ -65,3 +65,38 @@ class TestEnv(unittest.TestCase):
                 return self.OTHER
 
         self.assertEqual(Settings().SETTING, True)
+
+    def test_env_bool(self):
+        class Settings:
+            @cbs.envbool
+            def SETTING(self):
+                return None
+
+        s = Settings()
+        self.assertTrue(s.SETTING is None)
+
+        for tval in ('y', 'yes', 'on', 't', 'true', '1'):
+            os.environ['SETTING'] = tval
+            del s.SETTING
+            self.assertTrue(s.SETTING)
+
+            os.environ['SETTING'] = tval.title()
+            del s.SETTING
+            self.assertTrue(s.SETTING)
+
+            os.environ['SETTING'] = tval.upper()
+            del s.SETTING
+            self.assertTrue(s.SETTING)
+
+        for fval in ('n', 'no', 'off', 'f', 'false', '0'):
+            os.environ['SETTING'] = fval
+            del s.SETTING
+            self.assertFalse(s.SETTING)
+
+            os.environ['SETTING'] = fval.title()
+            del s.SETTING
+            self.assertFalse(s.SETTING)
+
+            os.environ['SETTING'] = fval.upper()
+            del s.SETTING
+            self.assertFalse(s.SETTING)
