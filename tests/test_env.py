@@ -100,3 +100,8 @@ class TestEnv(unittest.TestCase):
             os.environ['SETTING'] = fval.upper()
             del s.SETTING
             self.assertFalse(s.SETTING)
+
+        os.environ['SETTING'] = 'nyet'
+        del s.SETTING
+        with self.assertRaises(ValueError):
+            s.SETTING
