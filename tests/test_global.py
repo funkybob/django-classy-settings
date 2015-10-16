@@ -17,4 +17,4 @@ class GlobalSettingsTest(unittest.TestCase):
         g = {}
         cbs.apply(MySettings, g)
 
-        self.assertTrue(len(g['TEMPLATE_LOADERS']), 3) 
+        self.assertTrue(len(g['TEMPLATE_LOADERS']), 3)
