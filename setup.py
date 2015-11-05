@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='django-classy-settings',
-    version='1.1.4',
+    version='1.1.5',
     description='Simple class-based settings for Django',
     author='Curtis Maloney',
     author_email='curtis@tinbrain.net',
