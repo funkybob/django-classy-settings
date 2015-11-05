@@ -32,7 +32,8 @@ Contents
 Quickstart
 ----------
 
-Replace your default ``settings.py``:
+In your default ``settings.py``, add a `BaseSettings` class, which extends
+`cbs.BaseSettings`:
 
 .. code-block:: python
 
@@ -56,8 +57,10 @@ Derive testing/staging/production settings:
     class ProductionSettings(StagingSettings):
         DEBUG = False
 
-Any upper-case properties will be included in your settings.  Any methods which
-match this will be called to yield their values.
+Define on these classes settings that you want to change based on selection. 
+Any properties that look like settings (where name.is_uppper() is True) will be
+included in your settings.  Any methods which match this will be called to
+yield their values.
 
 Finally, apply the setting you want:
 
@@ -66,6 +69,9 @@ Finally, apply the setting you want:
     import os
     MODE = os.environ.get('DJANGO_MODE', 'Local')
     cbs.apply('{}Settings'.format(MODE.title()), globals())
+
+All globaly declared settings will continue to work as expected, unless the
+same name exists on the applied settings class.
 
 
 Helpers
