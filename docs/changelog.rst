@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+1.1.6 (2015-??-??)
+------------------
+
+Bugs Fixed:
+
+- Fix case where @env(...) would return a partial on env, instead of the
+  sub-class, which broke envbool (Thanks TC)
+
 1.1.5 (2015-11-05)
 ------------------
 
