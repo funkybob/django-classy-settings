@@ -105,3 +105,14 @@ class TestEnv(unittest.TestCase):
         del s.SETTING
         with self.assertRaises(ValueError):
             s.SETTING
+
+    def test_envbool_with_specified_key_set_true(self):
+
+        class Settings:
+
+            @cbs.envbool(key='MY_SETTING')
+            def SETTING(self):
+                return False
+
+        os.environ['MY_SETTING'] = 'true'
+        self.assertEqual(Settings().SETTING, True)
