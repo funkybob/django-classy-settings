@@ -42,7 +42,7 @@ class env(object):
     '''
     def __new__(cls, *args, **kwargs):
         if not args:
-            return partial(env, **kwargs)
+            return partial(cls, **kwargs)
         return object.__new__(cls)
 
     def __init__(self, getter, key=None, type=None, prefix=None):
