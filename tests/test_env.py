@@ -105,3 +105,72 @@ class TestEnv(unittest.TestCase):
         del s.SETTING
         with self.assertRaises(ValueError):
             s.SETTING
+
+    def test_envbool_default(self):
+
+        class Settings:
+
+            @cbs.envbool
+            def SETTING(self):
+                return True
+
+        self.assertEqual(Settings().SETTING, True)
+
+    def test_envbool_set_true(self):
+
+        class Settings:
+
+            @cbs.envbool
+            def SETTING(self):
+                return False
+
+        for value in [
+            'y', 'yes', 'on', 't', 'true', '1',
+            'Y', 'YES', 'ON', 'T', 'TRUE',
+            'Y ', ' YES', '  ON', '\tT', '\nTRUE',
+            'yEs', 'On', 'True',
+        ]:
+            os.environ['SETTING'] = value
+            self.assertEqual(Settings().SETTING, True)
+
+    def test_envbool_set_false(self):
+
+        class Settings:
+
+            @cbs.envbool
+            def SETTING(self):
+                return True
+
+        for value in [
+            'n', 'no', 'off', 'f', 'false', '0',
+            'N', 'NO', 'OFF', 'F', 'FALSE',
+            ' N ', 'NO ', ' OFF', 'F\t', 'FALSE\n',
+            'No', 'Off', 'fALSE',
+        ]:
+            os.environ['SETTING'] = value
+            self.assertEqual(Settings().SETTING, False)
+
+    def test_envbool_set_invalid(self):
+
+        class Settings:
+
+            @cbs.envbool
+            def SETTING(self):
+                return True
+
+        for value in [
+            'yep', 'nah', '-1', '10', '00', '', 'Y Y',
+        ]:
+            os.environ['SETTING'] = value
+            self.assertRaises(ValueError, lambda: Settings().SETTING)
+
+    def test_envbool_with_specified_key_set_true(self):
+
+        class Settings:
+
+            @cbs.envbool(key='MY_SETTING')
+            def SETTING(self):
+                return False
+
+        os.environ['MY_SETTING'] = 'true'
+        self.assertEqual(Settings().SETTING, True)
