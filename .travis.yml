@@ -21,7 +21,7 @@ env:
   - DJANGO="django1.9"
 
 install:
-  - pip install tox --use-mirrors
+  - pip install tox
 
 script:
   - tox -e ${DJANGO}
