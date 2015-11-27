@@ -19,4 +19,5 @@ setup(
     install_requires=[
         'Django>=1.6',
     ],
+    test_suite='tests',
 )
