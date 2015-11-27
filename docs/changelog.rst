@@ -4,6 +4,10 @@ Change Log
 1.1.6 (2015-??-??)
 ------------------
 
+Features Added:
+
+- Tox config was overhauled, and hooked into "setup.py test" (Thanks TC)
+
 Bugs Fixed:
 
 - Fix case where @env(...) would return a partial on env, instead of the
