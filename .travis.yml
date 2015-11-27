@@ -1,17 +1,27 @@
 sudo: false
+
+os:
+  - linux
+  - osx
+
 language: python
+
 python:
   - "2.7"
   - "3.3"
   - "3.4"
+  - "3.5"
   - "pypy"
   - "pypy3"
+
 env:
-  - DJANGO="Django<1.8"
-  - DJANGO="Django<1.9"
+  - DJANGO="django1.6"
+  - DJANGO="django1.7"
+  - DJANGO="django1.8"
+  - DJANGO="django1.9"
 
 install:
-  - pip install $DJANGO --use-mirrors
+  - pip install tox --use-mirrors
 
 script:
-  - python -m unittest discover
+  - tox -e ${DJANGO}
