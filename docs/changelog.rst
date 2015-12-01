@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+1.1.8 (2015-12-??)
+------------------
+
+Features Added:
+
+- Use `inspect.ismethod` instead of just `callable` for detecting methods on
+  settings classes.
+
+Deprecation:
+
+- Removed ill concieved `@cbs.returns_callable`.  Document a solution instead.
+
 1.1.7 (2015-12-02)
 ------------------
 

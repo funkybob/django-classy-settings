@@ -10,7 +10,6 @@ class MethodSettings():
     def PROJECT_NAME(self):
         return 'fancy_project'
 
-    @cbs.returns_callable
     def CALLABLE_THING(self):
         def return_true():
             return True
@@ -53,4 +52,4 @@ class TestApply(unittest.TestCase):
         g = {}
         cbs.apply(MethodSettings, g)
 
-        self.assertTrue(g['CALLABLE_THING']())
+        self.assertTrue(g['CALLABLE_THING']() is True)

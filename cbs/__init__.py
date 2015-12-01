@@ -1,6 +1,7 @@
 
 from functools import partial
 import importlib
+from inspect import ismethod
 import os
 
 from django.utils import six
@@ -76,14 +77,6 @@ class envbool(env):
         super(envbool, self).__init__(*args, **kwargs)
 
 
-def returns_callable(thing):
-    '''
-    Mark a setting so we don't call it during apply
-    '''
-    setattr(thing, '_cbs_dont_call', True)
-    return thing
-
-
 def apply(name, to):
     '''
     Apply settings to ``to``, which is expected to be globals().
@@ -117,7 +110,7 @@ def apply(name, to):
     settings = obj()
 
     def resolve_callable(value):
-        if callable(value) and not getattr(value, '_cbs_dont_call', False):
+        if ismethod(value):
             return value()
         return value
 

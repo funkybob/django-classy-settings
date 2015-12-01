@@ -62,9 +62,6 @@ Any properties that look like settings (where name.is_uppper() is True) will be
 included in your settings.  Any methods which match this will be called to
 yield their values.
 
-If your setting should result in a callable object, you can decorate it with
-`@cbs.returns_callable` to tell CBS not to call it.
-
 Finally, apply the setting you want:
 
 .. code-block:: python
