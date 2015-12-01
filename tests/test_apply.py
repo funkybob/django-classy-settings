@@ -10,6 +10,12 @@ class MethodSettings():
     def PROJECT_NAME(self):
         return 'fancy_project'
 
+    @cbs.returns_callable
+    def CALLABLE_THING(self):
+        def return_true():
+            return True
+        return return_true
+
 
 class TestApply(unittest.TestCase):
 
@@ -42,3 +48,9 @@ class TestApply(unittest.TestCase):
 
     def test_apply_settings_invalid_string_reference(self):
         self.assertRaises(ImportError, cbs.apply, 'invalid.Class', {})
+
+    def test_dont_call(self):
+        g = {}
+        cbs.apply(MethodSettings, g)
+
+        self.assertTrue(g['CALLABLE_THING']())

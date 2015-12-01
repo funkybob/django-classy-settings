@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+1.1.7 (2015-12-02)
+------------------
+
+Features Added:
+
+- Added `@cbs.returns_callable` for settings that return callables
+
 1.1.6 (2015-11-29)
 ------------------
 
