@@ -17,7 +17,7 @@ setup(
         'Intended Audience :: Developers',
     ],
     install_requires=[
-        'Django>=1.6',
+        'Django>=1.7',
     ],
     test_suite='tests',
 )
