@@ -6,7 +6,6 @@ import os
 
 from django.utils import six
 
-from .base import GlobalSettings  # noqa
 from .utils import as_bool
 
 
@@ -121,8 +120,11 @@ def apply(name, to):
     })
 
 
-from django import VERSION
+class GlobalSettings(object):
+    '''
+    A mixin to help access Django's default global settings.
+    '''
 
-base = importlib.import_module('cbs.base.django{}{}'.format(*VERSION[:2]))
-
-BaseSettings = getattr(base, 'Base{}{}Settings'.format(*VERSION[:2]))
+    def __getattr__(self, key):
+        from django.conf import global_settings
+        return getattr(global_settings, key)
