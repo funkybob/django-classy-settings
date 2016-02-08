@@ -25,24 +25,20 @@ Contents
    :maxdepth: 2
 
    tips
-   simple
    api
    changelog
 
 Quickstart
 ----------
 
-In your default ``settings.py``, add a `BaseSettings` class, which extends
-`cbs.BaseSettings`:
+In your default ``settings.py``, add a `BaseSettings` class:
 
 .. code-block:: python
 
     import cbs
 
-    class BaseSettings(cbs.BaseSettings):
-        PROJECT_NAME = 'myproject'
-
-You must provide the project name you passed to 'startproject'.
+    class BaseSettings():
+        DEBUG = True
 
 Derive testing/staging/production settings:
 
@@ -81,7 +77,7 @@ We all like moving settings into the ENV, right?  So, here's a helper.
 
 .. code-block:: python
 
-    class Settings(BaseSettings):
+    class Settings:
 
         # Will return 'SECRET' from env vars, or the default if not set.
         @cbs.env
@@ -203,23 +199,14 @@ from os.environ['TOGGLE_{key}'] if it exists, passed through ``as_bool``, or
 the value if it is not set.
 
 
-Base classes
-------------
-
-The `BaseSettings` class is automatically chosen based on the installed version of Django.  You can override this by explicitly choosing the verison base:
-
-- cbs.base.django16.Base16Settings
-- cbs.base.django17.Base17Settings
-- cbs.base.django18.Base18Settings
-
+Global Defaults
+---------------
 
 Also included is `GlobalSettings`, which pulls in all the default "global" settings from the currently installed version of Django.  This makes it simpler to extend the default settings not included when you run `django-admin startproject`.
 
-.. note::  This class should always be _last_ in your inheritance list.
+.. code-block:: python
 
-   .. code-block:: python
+   import cbs
 
-      import cbs
-
-      class Settings(cbs.BaseSettings, cbs.GlobalSettings):
-          ...
+   class Settings(cbs.GlobalSettings):
+       ...

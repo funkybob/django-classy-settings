@@ -3,7 +3,7 @@ import unittest
 import cbs
 
 
-class MySettings(cbs.BaseSettings, cbs.GlobalSettings):
+class MySettings(cbs.GlobalSettings):
     PROJECT_NAME = 'tests'
 
     @property

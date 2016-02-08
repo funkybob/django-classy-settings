@@ -1,6 +1,24 @@
 Change Log
 ==========
 
+2.0.0 (2016-??-??)
+------------------
+
+The 'softer-touch' branch.
+
+As of 2.0, `django-classy-settings` is advocating a "minimal impact" approach.
+
+As such, it's recommended you retain the default ``settings.py`` as provided by
+Django, and only move to a class those settings which change based on
+environment.
+
+Deprecation:
+
+- Remove ``cbs.base``
+- No longer import ``BaseSettings`` in ``cbs``
+- Purged ``cbs.base``
+- Moved ``cbs.base.GlobalSettings`` into ``cbs``
+
 1.1.8 (2015-12-??)
 ------------------
 
