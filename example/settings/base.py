@@ -2,6 +2,6 @@
 import cbs
 
 
-class BaseSettings(cbs.BaseSettings):
+class BaseSettings(cbs.GlobalSettings):
 
     PROJECT_NAME = 'example'
