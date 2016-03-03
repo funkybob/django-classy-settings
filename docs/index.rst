@@ -168,6 +168,16 @@ False::
 
 Any other value will raise a ValueError.
 
+Finally, you can define an env setting that _must_ have an env var set, and has
+no default.
+
+.. code-block:: python
+
+   class BaseSettings(object):
+        REQUIRED = cbs.env(None, key='REQUIRED')
+
+This will raise a `RuntimeError` if the key `REQUIRED` is not set in the
+environ.
 
 Feature Toggles
 ---------------

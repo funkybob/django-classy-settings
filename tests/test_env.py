@@ -174,3 +174,12 @@ class TestEnv(unittest.TestCase):
 
         os.environ['MY_SETTING'] = 'true'
         self.assertEqual(Settings().SETTING, True)
+
+    def test_required_env(self):
+
+        class Settings:
+
+            SETTING = cbs.envbool(None, key='MY_SETTING')
+
+        with self.assertRaises(RuntimeError):
+            Settings().SETTING

@@ -59,6 +59,10 @@ class env(object):
         try:
             value = os.environ[self.key]
         except KeyError:
+            if self.getter is None:
+                raise RuntimeError(
+                    'You must set the %s environment variable.' % self.key
+                )
             value = self.getter(obj)
         else:
             if self.type:

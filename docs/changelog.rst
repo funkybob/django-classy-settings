@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+2.0.1 (2016-??-??)
+------------------
+
+Features Added:
+
+- You can now have an env var that _must_ have an env set.
+
 2.0.0 (2016-02-08)
 ------------------
 
