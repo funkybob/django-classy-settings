@@ -7,6 +7,8 @@ Change Log
 Features Added:
 
 - You can now have an env var that _must_ have an env set.
+- New `as_list` and `as_tuple` utility functions for casting values
+  [Thanks MarkusH]
 
 2.0.0 (2016-02-08)
 ------------------
