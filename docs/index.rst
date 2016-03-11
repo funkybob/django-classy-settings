@@ -141,8 +141,8 @@ decorators for each prefix you need, if you have many.
 
 
 Also, you can pass a type casting callable to convert the string to whatever
-you need, as well as affect validation.  Built in is ``as_bool`` to
-intelligently cast value to bool.
+you need, as well as affect validation. Built in are ``as_bool``, ``as_list``,
+and ``as_tuple`` to intelligently cast values to bools, lists, and tuples.
 
 .. code-block:: python
 
@@ -155,8 +155,8 @@ intelligently cast value to bool.
 As an additional helper, there is ``cbs.envbool`` which subclasses ``cbs.env``
 and sets `type` to ``as_bool``.
 
-Once the value is stripped and lower-cased, ``as_bool`` tests it against two
-lists:
+``as_bool`` will strip white spaces and lower-case the given value, testing
+it against two lists:
 
 True::
 
@@ -167,6 +167,10 @@ False::
     'n', 'no', 'off', 'f', 'false', '0'
 
 Any other value will raise a ValueError.
+
+The ``as_list`` and ``as_tuple`` converters will take the input string and
+split it at ``,``. Additionally, these functions will strip leading and
+trailing white spaces from each item.
 
 Finally, you can define an env setting that _must_ have an env var set, and has
 no default.
