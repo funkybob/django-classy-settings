@@ -167,6 +167,9 @@ no default.
    class BaseSettings(object):
         REQUIRED = cbs.env(None, key='REQUIRED')
 
+.. note:: You _must_ define ``key``, as there is no way otherwise for the
+    descriptor to know its name.
+
 This will raise a `RuntimeError` if the key `REQUIRED` is not set in the
 environ.
 
