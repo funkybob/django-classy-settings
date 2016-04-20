@@ -109,19 +109,6 @@ You can override the default prefix of '' by setting ``cbs.DEFAULT_ENV_PREFIX``
             return 'dummy-secret'
 
 
-The recommended pattern for env settings that are required is to raise
-``django.core.exceptions.ImproperlyConfigured``:
-
-.. code-block:: python
-
-   import cbs
-
-   class Settings(BaseSettings):
-       @cbs.env
-       def SECRET(self):
-           raise ImproperlyConfigured('You must specify SECRET in env')
-
-
 Next, because ``cbs.env`` is also a decorator factory, you can create
 decorators for each prefix you need, if you have many.
 
