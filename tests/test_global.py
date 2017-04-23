@@ -17,4 +17,4 @@ class GlobalSettingsTest(unittest.TestCase):
         g = {}
         cbs.apply(MySettings, g)
 
-        self.assertTrue('INSTALLED_APPS']), 1)
+        self.assertTrue(len(g['INSTALLED_APPS']), 1)
