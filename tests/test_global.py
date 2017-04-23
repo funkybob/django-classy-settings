@@ -7,8 +7,8 @@ class MySettings(cbs.GlobalSettings):
     PROJECT_NAME = 'tests'
 
     @property
-    def TEMPLATE_LOADERS(self):
-        return super(MySettings, self).TEMPLATE_LOADERS + ('test',)
+    def INSTALLED_APPS(self):
+        return super(MySettings, self).INSTALLED_APPS + ('test',)
 
 
 class GlobalSettingsTest(unittest.TestCase):
@@ -17,4 +17,4 @@ class GlobalSettingsTest(unittest.TestCase):
         g = {}
         cbs.apply(MySettings, g)
 
-        self.assertTrue(len(g['TEMPLATE_LOADERS']), 3)
+        self.assertTrue('INSTALLED_APPS']), 1)
