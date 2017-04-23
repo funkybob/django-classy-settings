@@ -8,7 +8,7 @@ class MySettings(cbs.GlobalSettings):
 
     @property
     def INSTALLED_APPS(self):
-        return super(MySettings, self).INSTALLED_APPS + ('test',)
+        return super(MySettings, self).INSTALLED_APPS + ['test',]
 
 
 class GlobalSettingsTest(unittest.TestCase):
