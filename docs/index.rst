@@ -8,6 +8,11 @@ Django Classy Settings
 
 .. rubric:: Stay classy, Django.
 
+Credits
+-------
+
+This work was originally inspired by the work of Jessie O'Connor.
+
 Overview
 --------
 
