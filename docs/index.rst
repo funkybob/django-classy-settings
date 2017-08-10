@@ -211,11 +211,18 @@ the value if it is not set.
 Global Defaults
 ---------------
 
-Also included is `GlobalSettings`, which pulls in all the default "global" settings from the currently installed version of Django.  This makes it simpler to extend the default settings not included when you run `django-admin startproject`.
+Previously this package provided ``GlobalSettings`` as a base class to give you
+access to the default Django settings values.
+
+This approach has been deprecated. Instead, to access Django's default settings
+use:
 
 .. code-block:: python
 
-   import cbs
+   from django.conf import global_settings as default
 
-   class Settings(cbs.GlobalSettings):
-       ...
+You can now reference default settings as follows:
+
+.. code-block:: python
+
+   MIDDLEWARE = default.MIDDLEWARE + [....]
