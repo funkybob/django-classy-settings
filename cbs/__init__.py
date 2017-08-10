@@ -4,15 +4,13 @@ import importlib
 from inspect import ismethod
 import os
 
-from django.utils import six
-
 from .utils import as_bool
 
 
 DEFAULT_ENV_PREFIX = ''
 
 
-class env(object):
+class env:
     '''
     Decorator to make environ based settings simpler.
 
@@ -53,7 +51,7 @@ class env(object):
             prefix = DEFAULT_ENV_PREFIX
         self.key = ''.join([prefix, key])
 
-    def __get__(self, obj, type=None):
+    def __get__(self, obj, klass=None):
         if obj is None:
             return self
         try:
@@ -77,7 +75,7 @@ class envbool(env):
     '''
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('type', as_bool)
-        super(envbool, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 def apply(name, to):
@@ -97,7 +95,7 @@ def apply(name, to):
         cbs.apply('settings.my.MySettings', globals())
 
     '''
-    if isinstance(name, six.string_types):
+    if isinstance(name, str):
         if '.' in name:
             module, obj_name = name.rsplit('.', 1)
             module = importlib.import_module(module)
@@ -122,13 +120,3 @@ def apply(name, to):
         for key in dir(settings)
         if key.isupper()
     })
-
-
-class GlobalSettings(object):
-    '''
-    A mixin to help access Django's default global settings.
-    '''
-
-    def __getattr__(self, key):
-        from django.conf import global_settings
-        return getattr(global_settings, key)

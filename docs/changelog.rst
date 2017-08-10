@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+2.1.0 (2017-08-10)
+------------------
+
+Removed:
+
+- Dropped Python2 support.
+- Removed deprecated ``cbs.BaseSettings``
+
 2.0.1 (2016-04-16)
 ------------------
 
