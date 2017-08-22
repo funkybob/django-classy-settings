@@ -33,19 +33,21 @@ class env:
 
     ``key`` and ``prefix`` can be used together.
 
-    You can pass a type caster / validator:
+    You can pass a caster / validator:
 
-    @env(type=int)
+    @env(cast=int)
     def SETTING(self):
     '''
     def __new__(cls, *args, **kwargs):
+        if 'type' in kwargs and 'cast' not in kwargs:
+            kwargs['cast'] = kwargs.pop('type')
         if not args:
             return partial(cls, **kwargs)
         return object.__new__(cls)
 
-    def __init__(self, getter, key=None, type=None, prefix=None):
+    def __init__(self, getter, key=None, cast=None, prefix=None):
         self.getter = getter
-        self.type = type
+        self.cast = cast
         key = key or getter.__name__
         if prefix is None:
             prefix = DEFAULT_ENV_PREFIX
@@ -63,8 +65,8 @@ class env:
                 )
             value = self.getter(obj)
         else:
-            if self.type:
-                value = self.type(value)
+            if self.cast:
+                value = self.cast(value)
         obj.__dict__[self.getter.__name__] = value
         return value
 
@@ -74,7 +76,7 @@ class envbool(env):
     A special case of env that returns a boolean.
     '''
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('type', as_bool)
+        kwargs.setdefault('cast', as_bool)
         super().__init__(*args, **kwargs)
 
 

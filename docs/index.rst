@@ -132,20 +132,20 @@ decorators for each prefix you need, if you have many.
            return 'test@paypal.com'
 
 
-Also, you can pass a type casting callable to convert the string to whatever
-you need, as well as affect validation. Built in are ``as_bool``, ``as_list``,
-and ``as_tuple`` to intelligently cast values to bools, lists, and tuples.
+Also, you can pass a callable to cast the string to whatever you need, as well
+as affect validation. Built in are ``as_bool``, ``as_list``, and ``as_tuple``
+to intelligently cast values to bools, lists, and tuples.
 
 .. code-block:: python
 
    class BaseSettings(cbs.BaseSettings):
 
-       @cbs.env(type=int)
+       @cbs.env(cast=int)
        def COUNT_LIMIT(self):
            return 6
 
 As an additional helper, there is ``cbs.envbool`` which subclasses ``cbs.env``
-and sets `type` to ``as_bool``.
+and sets `cast` to ``as_bool``.
 
 ``as_bool`` will strip white spaces and lower-case the given value, testing
 it against two lists:

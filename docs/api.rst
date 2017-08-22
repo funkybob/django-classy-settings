@@ -20,8 +20,8 @@ prefix
    Prefixes the method name to determine the environment variable checked
    for this value.
 
-type
-   A callable to help with type-casting values.
+cast
+   A callable to help with casting/validating values.
 
 The key is always prefixed, using the value of cbs.DEFAULT_ENV_PREFIX if none is specified.
 

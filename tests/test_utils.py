@@ -12,7 +12,7 @@ class UtilsEnv(unittest.TestCase):
             self.assertTrue(as_bool(value))
         for value in no:
             self.assertFalse(as_bool(value))
-        self.assertRaisesRegexp(
+        self.assertRaisesRegex(
             ValueError,
             "Unrecognised value for bool: 'blub blah'",
             as_bool,
