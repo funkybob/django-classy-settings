@@ -48,26 +48,26 @@ class env:
     def __init__(self, getter, key=None, cast=None, prefix=None):
         self.getter = getter
         self.cast = cast
-        key = key or getter.__name__
+        self.key = key or getter.__name__
         if prefix is None:
             prefix = DEFAULT_ENV_PREFIX
-        self.key = ''.join([prefix, key])
+        self.var_name = ''.join([prefix, self.key])
 
     def __get__(self, obj, klass=None):
         if obj is None:
             return self
         try:
-            value = os.environ[self.key]
+            value = os.environ[self.var_name]
         except KeyError:
             if self.getter is None:
                 raise RuntimeError(
-                    'You must set the %s environment variable.' % self.key
+                    'You must set the %s environment variable.' % self.var_name
                 )
             value = self.getter(obj)
         else:
             if self.cast:
                 value = self.cast(value)
-        obj.__dict__[self.getter.__name__] = value
+        obj.__dict__[self.key] = value
         return value
 
 
