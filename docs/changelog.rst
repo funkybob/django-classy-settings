@@ -6,6 +6,10 @@ Change Log
 
 - Renamed @env(type) to cast
 
+Bugs Fixed:
+
+- Fix required env vars not having a name to look up (Thanks pgcd!)
+
 2.1.0 (2017-08-10)
 ------------------
 

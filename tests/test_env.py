@@ -193,4 +193,4 @@ class TestEnv(unittest.TestCase):
         os.environ['MY_SETTING'] = 'true'
 
         self.assertEqual(Settings().SETTING, True)
-        
+
