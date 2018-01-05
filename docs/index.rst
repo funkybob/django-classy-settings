@@ -64,12 +64,12 @@ Derive testing/staging/production settings:
     class ProductionSettings(StagingSettings):
         DEBUG = False
 
-Define on these classes settings that you want to change based on selection. 
+Define on these classes settings that you want to change based on selection.
 Any properties that look like settings (where name.is_uppper() is True) will be
 included in your settings.  Any methods which match this will be called to
 yield their values.
 
-Finally, apply the setting you want:
+Finally, at the end of your ``settings.py``, apply the setting you want:
 
 .. code-block:: python
 
@@ -212,7 +212,6 @@ environment variables.
 This will produce a dict containing a key for each argument.  The value will be
 from os.environ['TOGGLE_{key}'] if it exists, passed through ``as_bool``, or
 the value if it is not set.
-
 
 Global Defaults
 ---------------
