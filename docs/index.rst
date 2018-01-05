@@ -36,6 +36,12 @@ Contents
 Quickstart
 ----------
 
+Install the package:
+
+.. code-block:: bash
+
+   $ pip install django-classy-settings
+
 In your default ``settings.py``, add a `BaseSettings` class:
 
 .. code-block:: python
