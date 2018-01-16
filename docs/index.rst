@@ -231,3 +231,34 @@ You can now reference default settings as follows:
 .. code-block:: python
 
    MIDDLEWARE = default.MIDDLEWARE + [....]
+
+
+Complex Values
+--------------
+
+A common question is how to handle complex settings, like DATABASES.
+
+
+.. code-block:: python
+
+   class BaseSettings:
+       @cbs.env
+       def DB_NAME(self):
+          return 'test-db'
+
+       @cbs.env
+       def DB_USER(self):
+          return 'test-user'
+
+       @property
+       def DATABASES(self):
+           return {
+               'default': {
+                   'NAME': self.DB_NAME,
+                   'USER': self.DB_USER,
+                   ...
+               }
+           }
+
+This way, sub-classes can set DB_NAME and so on, or they can be overidden by
+settings.
