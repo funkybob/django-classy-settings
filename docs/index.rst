@@ -261,4 +261,4 @@ A common question is how to handle complex settings, like DATABASES.
            }
 
 This way, sub-classes can set DB_NAME and so on, or they can be overidden by
-settings.
+environment variables.
