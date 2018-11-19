@@ -39,8 +39,6 @@ class env:
     def SETTING(self):
     '''
     def __new__(cls, *args, **kwargs):
-        if 'type' in kwargs and 'cast' not in kwargs:
-            kwargs['cast'] = kwargs.pop('type')
         if not args:
             return partial(cls, **kwargs)
         return object.__new__(cls)
@@ -48,10 +46,17 @@ class env:
     def __init__(self, getter, key=None, cast=None, prefix=None):
         self.getter = getter
         self.cast = cast
-        self.key = key or getter.__name__
+        if key is None and getter is not None:
+            key = getter.__name__
         if prefix is None:
             prefix = DEFAULT_ENV_PREFIX
-        self.var_name = ''.join([prefix, self.key])
+        self.prefix = prefix
+        self._set_name(key)
+
+    def _set_name(self, name):
+        self.key = name
+        if name:
+            self.var_name = ''.join([self.prefix, name])
 
     def __get__(self, obj, klass=None):
         if obj is None:
@@ -61,7 +66,7 @@ class env:
         except KeyError:
             if self.getter is None:
                 raise RuntimeError(
-                    'You must set the %s environment variable.' % self.var_name
+                    f'You must set the {self.var_name} environment variable.'
                 )
             value = self.getter(obj)
         else:
@@ -69,6 +74,10 @@ class env:
                 value = self.cast(value)
         obj.__dict__[self.key] = value
         return value
+
+    def __set_name__(self, owner, name):
+        if self.key is None:
+            self._set_name(name)
 
 
 class envbool(env):

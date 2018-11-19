@@ -194,3 +194,10 @@ class TestEnv(unittest.TestCase):
 
         self.assertEqual(Settings().SETTING, True)
 
+    def test_set_name(self):
+
+        class Settings:
+
+            SETTING = cbs.env(None)
+
+        self.assertEqual(Settings.SETTING.key, 'SETTING')
