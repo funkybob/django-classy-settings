@@ -82,6 +82,7 @@ class env:
     def __get__(self, obj, cls=None):
         if obj is None:
             return self
+
         try:
             value = os.environ[self.env_name]
         except KeyError:
@@ -89,9 +90,10 @@ class env:
                 value = self.default
             else:
                 value = self.getter(obj)
-        else:
-            if self.cast:
-                value = self.cast(value)
+
+        if self.cast and isinstance(value, str):
+            value = self.cast(value)
+
         obj.__dict__[self.key] = value
         return value
 
@@ -145,8 +147,8 @@ class BaseSettings:
         '''
         Returns a function to be used as __getattr__ in a module.
         '''
-
         self = cls()
+
         def __getattr__(key, self=self):
             if not key.isupper():
                 raise AttributeError(key)
