@@ -1,5 +1,6 @@
-'''Type-casting helper functions.
-'''
+"""Type-casting helper functions.
+"""
+
 
 def as_bool(value: str) -> bool:
     """Smart cast value to bool

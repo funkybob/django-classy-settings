@@ -121,8 +121,8 @@ class env:
 
 
 class BaseSettings:
-    '''Base class for env switchable settings configuration.
-    '''
+    """Base class for env switchable settings configuration."""
+
     __children = {}
 
     def __init_subclass__(cls, **kwargs):
