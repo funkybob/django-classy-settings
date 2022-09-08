@@ -11,7 +11,6 @@ class EnvTestCase(unittest.TestCase):
         Clear the env dict before each test.
         """
         os.environ.clear()
-        cbs.DEFAULT_ENV_PREFIX = ""
 
 
 class TestImmediate(EnvTestCase):

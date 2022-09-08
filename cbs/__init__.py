@@ -4,9 +4,6 @@ from functools import cached_property, partial
 from . import cast
 from .urls import parse_dburl
 
-DEFAULT_ENV_PREFIX = ""
-
-
 class env:
     """
     Decorator to make environ based settings simpler.
@@ -57,9 +54,7 @@ class env:
         """
         self.cast = cast
 
-        if prefix is None:
-            prefix = DEFAULT_ENV_PREFIX
-        self.prefix = prefix
+        self.prefix = prefix or ''
 
         self.key = key
 
