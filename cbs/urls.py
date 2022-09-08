@@ -33,7 +33,9 @@ def parse_dburl(url: str) -> dict:
 
     :param str url: A db-url format string
 
-    :returns dictd: a Django DATABASES compatible configuration dict.
+    :return: A Django DATABASES compatible configuration dict.
+        Unknown keys in the querystring will be placed verbatim in the
+        ``OPTIONS`` sub-dict.
     """
     url = urlparse(url)
 

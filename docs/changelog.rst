@@ -1,6 +1,25 @@
 Change Log
 ==========
 
+3.0.0 (2022-09-08)
+------------------
+
+
+.. admonition:: Backwards incompatible changes!
+
+   This release makes major API changes and drops support for some features.
+
+Major overhaul of the code base.
+
+- Supports Python 3.7+
+- Removed `toggle` feature entirely.
+
+Features Added:
+
+- Pre-canned typed `env` helpers: `env.bool`, `env.int`, `env.dburl`,
+  `env.list`, `env.tuple`
+- `BaseSetings` class, with `getattr_factory` and auto-subclass resolution.
+
 2.1.1 (2017-09-22)
 ------------------
 

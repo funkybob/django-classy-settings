@@ -4,57 +4,33 @@ from functools import cached_property, partial
 from . import cast
 from .urls import parse_dburl
 
+
 class env:
-    """
-    Decorator to make environ based settings simpler.
+    """property to make environment variable based settings simpler.
 
-    @env
-    def SOMETHING_KEY(self):
-        return 'default'
+    :param Any default: default value
+        If it's a string, it will be passed to the ``cast`` function
+        When used as a decorator, this is the method.
+    :param str key: Override environment variable name
+        (Defaults to class attribute name)
+    :param str prefix: Prefix to ``key`` when looking up ``os.environ``
+    :param func cast: Function to cast ``str`` values.
 
-    You can override the key to use in the env:
-
-    @env(key='OTHER_NAME')
-    def SETTINGS_NAME(self):
-        ...
-
-    Or, if you want the env to have a prefix not in settings:
-
-    @env(prefix='MY_')
-    def SETTING(self):
-        ...
-
-    ``key`` and ``prefix`` can be used together.
-
-    You can pass a caster / validator:
-
-    @env(cast=int)
-    def SETTING(self):
-
-    Alternatively there are helpers for common castings:
-
-    @env.int
-    @env.bool
-    @env.dburl
-    @env.list
-
-    Additionally, it can be used as a property for immediate values.
-
-    DEBUG = env.bool(True)
     """
 
     def __new__(cls, *args, **kwargs):
+        """
+        Catch case when we're used as a decorator with keyword arguments, or
+        used to pre-set some defaults.
+        """
         if not args:
             return partial(cls, **kwargs)
         return object.__new__(cls)
 
     def __init__(self, getter, key=None, cast=None, prefix=None):
-        """
-        `getter` may be a method, or a constant value
-        """
         self.cast = cast
 
-        self.prefix = prefix or ''
+        self.prefix = prefix or ""
 
         self.key = key
 
@@ -94,22 +70,42 @@ class env:
 
     @classmethod
     def bool(cls, *args, **kwargs):
+        """Helper for bool-cast settings.
+
+        Uses :py:func:`.cast.to_bool`
+        """
         return cls(cast=cast.as_bool, *args, **kwargs)
 
     @classmethod
     def int(cls, *args, **kwargs):
+        """Helper for int-cast settings.
+
+        Uses ``int``
+        """
         return cls(cast=int, *args, **kwargs)
 
     @classmethod
     def dburl(cls, *args, **kwargs):
+        """Helper for DB-Url cast settings.
+
+        Uses :py:func:`.urls.parse_dburl`
+        """
         return cls(cast=parse_dburl, *args, **kwargs)
 
     @classmethod
     def list(cls, *args, **kwargs):
+        """Helper for list-cast settings.
+
+        Uses :py:func:`.cast.as_list`
+        """
         return cls(cast=cast.as_list, *args, **kwargs)
 
     @classmethod
     def tuple(cls, *args, **kwargs):
+        """Helper for tuple-cast settings.
+
+        Uses :py:func:`.cast.as_tuple`
+        """
         return cls(cast=cast.as_tuple, *args, **kwargs)
 
 
@@ -125,6 +121,8 @@ class env:
 
 
 class BaseSettings:
+    '''Base class for env switchable settings configuration.
+    '''
     __children = {}
 
     def __init_subclass__(cls, **kwargs):
@@ -133,15 +131,26 @@ class BaseSettings:
 
     @classmethod
     def use(cls, env="DJANGO_MODE"):
-        """Helper for accessing sub-classes via env var name"""
+        """Helper for accessing sub-classes via env var name.
+
+        Takes the value of ``os.environ[env]``, calls ``.title()`` on it, then
+        appends `"Settings"`.
+
+        It will then find a sub-class of that name, and call
+        ``getattr__factory`` on it.
+
+        :param str env: Envirionment variable to get settings mode name from.
+        :return: function suitable for module-level ``__getattr__``
+        """
         base = os.environ.get(env, "")
         name = f"{base.title()}Settings"
         return cls.__children[name].getattr_factory()
 
     @classmethod
     def getattr_factory(cls):
-        """
-        Returns a function to be used as __getattr__ in a module.
+        """Returns a function to be used as __getattr__ in a module.
+
+        :return: function suitable for module-level ``__getattr__``
         """
         self = cls()
 

@@ -2,42 +2,28 @@
 API
 ===
 
----------
-Functions
----------
 
-@env
-----
+``cbs``
+-------
 
-The env decorator simplifies defining a setting from an evironment variable.
+.. autoclass:: cbs.env
+   :members: bool, int, dburl, list, tuple
 
-It accepts two optional arguments:
+.. autoclass:: cbs.BaseSettings
+   :members: use, getattr_factory
 
-key
-   Overrides the environment variable name checked for this value.
+``cbs.cast``
+------------
 
-prefix
-   Prefixes the method name to determine the environment variable checked
-   for this value.
+.. automodule:: cbs.cast
 
-cast
-   A callable to help with casting/validating values.
+.. autofunction:: cbs.cast.as_bool
 
-The key is always prefixed, using the value of cbs.DEFAULT_ENV_PREFIX if none is specified.
+.. autofunction:: cbs.cast.as_list
 
-apply
------
+.. autofunction:: cbs.cast.as_tuple
 
-.. code-block:: python
+``cbs.urls``
+------------
 
-   def apply(source, target)
-
-The `apply` function updates the target with the settings it gleans from
-`source`.
-
-If `source` is a string, it will be treated as an import path for the class to
-introspect for settings.  Otherwise, it will be considered the object to
-inspect.
-
-Valid settings are any property or callable for which ``isupper()`` returns
-`True`.
+.. autofunction:: cbs.urls.parse_dburl

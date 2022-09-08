@@ -1,6 +1,14 @@
-def as_bool(value):
-    """
-    Smart cast value to bool
+'''Type-casting helper functions.
+'''
+
+def as_bool(value: str) -> bool:
+    """Smart cast value to bool
+
+    :param str value: Value to cast.
+        Value will be stripped and ``.lower()``.
+        Values in ``("y", "yes", "on", "t", "true", "1")`` will be treated as True
+        Values in ``("n", "no", "off", "f", "false", "0")`` will be treated as False
+        All other values raise a ``ValueError``
     """
     if isinstance(value, bool):
         return value
@@ -12,7 +20,7 @@ def as_bool(value):
     raise ValueError("Unrecognised value for bool: %r" % value)
 
 
-def as_list(value):
+def as_list(value: str) -> list:
     """
     Smart cast value to list by splittng the input on ",".
     """
@@ -21,7 +29,7 @@ def as_list(value):
     return [x.strip() for x in value.split(",") if x.strip()]
 
 
-def as_tuple(value):
+def as_tuple(value: str) -> tuple:
     """
     Smart cast value to tuple by splittng the input on ",".
     """
