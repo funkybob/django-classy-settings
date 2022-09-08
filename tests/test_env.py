@@ -211,9 +211,6 @@ class EndDbUrlTest(EnvTestCase):
                 "ENGINE": "django.db.backends.postgresql",
                 "HOST": "hostname",
                 "NAME": "dbname",
-                "PASSWORD": "",
-                "PORT": None,
-                "USER": "",
             },
         )
 
@@ -230,9 +227,6 @@ class EndDbUrlTest(EnvTestCase):
                 "ENGINE": "django.db.backends.postgresql",
                 "HOST": "hostname",
                 "NAME": "dbname",
-                "PASSWORD": "",
-                "PORT": None,
-                "USER": "",
             },
         )
 

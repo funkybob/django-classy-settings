@@ -29,16 +29,30 @@ OPTS = {
 
 
 def parse_dburl(url: str) -> dict:
+    """A light-weight implementation of dj_database_url
+
+    :param str url: A db-url format string
+
+    :returns dictd: a Django DATABASES compatible configuration dict.
+    """
     url = urlparse(url)
 
     config = {
         "ENGINE": ENGINE_MAP.get(url.scheme, url.scheme),
         "NAME": unquote(url.path or "").lstrip("/"),
-        "USER": unquote(url.username or ""),
-        "PASSWORD": unquote(url.password or ""),
-        "HOST": url.hostname,
-        "PORT": str(url.port) if url.port else None,
     }
+
+    if url.hostname:
+        config["HOST"] = url.hostname
+
+    if url.username:
+        config["USER"] = unquote(url.username)
+
+    if url.password:
+        config["PASSWORD"] = unquote(url.password)
+
+    if url.port:
+        config["PORT"] = url.port
 
     opts = parse_qs(url.query)
 

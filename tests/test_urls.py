@@ -15,7 +15,7 @@ class TestUrlParse(TestCase):
                 "ENGINE": "django.db.backends.postgresql",
                 "NAME": "dbname",
                 "HOST": "hostname",
-                "PORT": "1234",
+                "PORT": 1234,
                 "PASSWORD": "password",
                 "USER": "user",
                 "CONN_MAX_AGE": 15,
