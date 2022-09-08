@@ -2,10 +2,11 @@
 name = "django-classy-settings"
 version = "3.0.0"
 description = "Simple class-based settings for Django"
+license = "BSD-2-Clause"
 authors = ["Curtis Maloney <curtis@tinbrain.net>"]
 readme = "README.md"
-repository = "https://github.com/funkybob/django-classy-settings"
 homepage = "https://django-classy-settings.readthedocs.io/en/latest/"
+repository = "https://github.com/funkybob/django-classy-settings"
 documentation = "https://django-classy-settings.readthedocs.io/en/latest/"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
