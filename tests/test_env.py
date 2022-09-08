@@ -15,53 +15,93 @@ class EnvTestCase(unittest.TestCase):
         cbs.DEFAULT_ENV_PREFIX = ''
 
 
-class TestEnv(EnvTestCase):
+# raw
+# key provided
+# prefix provided
+# key + prefix provided
 
-    def test_retrieve_from_method(self):
+class TestImmediate(EnvTestCase):
+
+    def test_default(self):
+        class Settings:
+            SETTING = env('value')
+
+        self.assertEqual(Settings().SETTING, 'value')
+
+    def test_override(self):
+        class Settings:
+            SETTING = env('value')
+
+        os.environ['SETTING'] = 'override'
+        self.assertEqual(Settings().SETTING, 'override')
+
+    def test_with_key(self):
+        class Settings:
+            SETTING = env('value', key='OTHER')
+
+        os.environ['OTHER'] = 'override'
+        self.assertEqual(Settings().SETTING, 'override')
+
+    def test_with_prefix(self):
+        class Settings:
+            SETTING = env('value', prefix='PREFIX_')
+
+        os.environ['PREFIX_SETTING'] = 'override'
+        self.assertEqual(Settings().SETTING, 'override')
+
+    def test_with_prefix_and_key(self):
+        class Settings:
+            SETTING = env('value', key='OTHER', prefix='PREFIX_')
+
+        os.environ['PREFIX_OTHER'] = 'override'
+        self.assertEqual(Settings().SETTING, 'override')
+
+
+class TestMethod(EnvTestCase):
+
+    def test_default(self):
         class Settings:
             @env
             def SETTING(self):
-                return 'bar'
+                return 'value'
 
-        self.assertEqual(Settings().SETTING, 'bar')
+        self.assertEqual(Settings().SETTING, 'value')
 
-    def test_retrieve_from_env(self):
+    def test_override(self):
         class Settings:
             @env
             def SETTING(self):
                 raise ValueError()  # pragma: no cover
 
-        os.environ['SETTING'] = 'foo'
-        self.assertEqual(Settings().SETTING, 'foo')
+        os.environ['SETTING'] = 'override'
+        self.assertEqual(Settings().SETTING, 'override')
 
-    def test_retrieve_from_env_specifying_key(self):
+    def test_with_key(self):
         class Settings:
-            @env(key='DJANGO_SETTING')
+            @env(key='OTHER')
             def SETTING(self):
                 raise ValueError()  # pragma: no cover
 
-        os.environ['DJANGO_SETTING'] = 'foo'
-        self.assertEqual(Settings().SETTING, 'foo')
+        os.environ['OTHER'] = 'override'
+        self.assertEqual(Settings().SETTING, 'override')
 
-    def test_retrieve_from_env_specifying_prefix(self):
+    def test_with_prefix(self):
         class Settings:
-            @env(prefix='DJANGO_')
+            @env(prefix='PREFIX_')
             def SETTING(self):
                 raise ValueError()  # pragma: no cover
 
-        os.environ['DJANGO_SETTING'] = 'foo'
-        self.assertEqual(Settings().SETTING, 'foo')
+        os.environ['PREFIX_SETTING'] = 'override'
+        self.assertEqual(Settings().SETTING, 'override')
 
-    def test_default_env_prefix(self):
-        cbs.DEFAULT_ENV_PREFIX = 'DJANGO_'
-
+    def test_with_prefix_and_key(self):
         class Settings:
-            @env
+            @env(key='OTHER', prefix='PREFIX_')
             def SETTING(self):
                 raise ValueError()  # pragma: no cover
 
-        os.environ['DJANGO_SETTING'] = 'foo'
-        self.assertEqual(Settings().SETTING, 'foo')
+        os.environ['PREFIX_OTHER'] = 'override'
+        self.assertEqual(Settings().SETTING, 'override')
 
     def test_refer_to_other_setting(self):
 
@@ -77,31 +117,22 @@ class TestEnv(EnvTestCase):
 
 class EnvBoolTest(EnvTestCase):
 
-    def test_env_bool_default(self):
+    def test_immediate(self):
+        class Settings:
+
+            DEBUG = env.bool(False)
+
+        os.environ['DEBUG'] = 'y'
+        self.assertTrue(Settings().DEBUG)
+
+    def test_default(self):
         class Settings:
 
             @env.bool
             def SETTING(self):
                 return None
 
-        s = Settings()
-
-        self.assertEqual(s.SETTING, None)
-
-    def test_immediate(self):
-
-        class Settings:
-
-            DEBUG = env.bool(False)
-
-
-        s = Settings()
-
-        self.assertFalse(s.DEBUG)
-
-        os.environ['DEBUG'] = 'y'
-        del s.DEBUG
-        self.assertTrue(s.DEBUG)
+        self.assertEqual(Settings().SETTING, None)
 
 
     def test_env_bool_casting(self):
@@ -160,3 +191,89 @@ class EnvBoolTest(EnvTestCase):
             # Since it raises an exception, we don't have to clear the cache
             with self.assertRaises(ValueError):
                 s.SETTING
+
+
+class EnvIntTest(EnvTestCase):
+    ...
+    def test_immediate(self):
+        class Settings:
+            SETTING = env.int('5432')
+
+        self.assertEqual(Settings().SETTING, 5432)
+
+    def test_override(self):
+        class Settings:
+            SETTING = env.int('5432')
+
+        os.environ['SETTING'] = '2345'
+        self.assertEqual(Settings().SETTING, 2345)
+
+class EndDbUrlTest(EnvTestCase):
+    ...
+    def test_default(self):
+        class Settings:
+            SETTING = env.dburl('postgres://hostname/dbname')
+
+        value = Settings().SETTING
+
+        self.assertEqual(value, {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': 'hostname',
+            'NAME': 'dbname',
+            'PASSWORD': '',
+            'PORT': None,
+            'USER': '',
+        })
+
+    def test_override(self):
+
+        class Settings:
+            SETTING = env.dburl('default')
+
+        os.environ['SETTING'] = 'postgres://hostname/dbname'
+        value = Settings().SETTING
+
+        self.assertEqual(value, {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': 'hostname',
+            'NAME': 'dbname',
+            'PASSWORD': '',
+            'PORT': None,
+            'USER': '',
+        })
+
+
+class EnvListTest(EnvTestCase):
+    ...
+    def test_immediate(self):
+
+        class Settings:
+            SETTING = env.list(['foo', 'bar'])
+
+        self.assertEqual(Settings().SETTING, ['foo', 'bar'])
+
+    def test_override(self):
+        class Settings:
+            SETTING = env.list([1])
+
+        os.environ['SETTING'] = 'one, two'
+
+        self.assertEqual(Settings().SETTING, ['one', 'two'])
+
+
+class EnvTupleTest(EnvTestCase):
+    ...
+    def test_immediate(self):
+
+        class Settings:
+            SETTING = env.tuple(('foo', 'bar',))
+
+        self.assertEqual(Settings().SETTING, ('foo', 'bar',))
+
+    def test_override(self):
+        class Settings:
+            SETTING = env.tuple((1,))
+
+        os.environ['SETTING'] = 'one, two'
+
+        self.assertEqual(Settings().SETTING, ('one', 'two',))
