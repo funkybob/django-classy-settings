@@ -1,15 +1,14 @@
-
 import os
 from functools import cached_property, partial
 
 from . import cast
 from .urls import parse_dburl
 
-DEFAULT_ENV_PREFIX = ''
+DEFAULT_ENV_PREFIX = ""
 
 
 class env:
-    '''
+    """
     Decorator to make environ based settings simpler.
 
     @env
@@ -45,16 +44,17 @@ class env:
     Additionally, it can be used as a property for immediate values.
 
     DEBUG = env.bool(True)
-    '''
+    """
+
     def __new__(cls, *args, **kwargs):
         if not args:
             return partial(cls, **kwargs)
         return object.__new__(cls)
 
     def __init__(self, getter, key=None, cast=None, prefix=None):
-        '''
+        """
         `getter` may be a method, or a constant value
-        '''
+        """
         self.cast = cast
 
         if prefix is None:
@@ -73,7 +73,7 @@ class env:
 
     @cached_property
     def env_name(self):
-        return ''.join([self.prefix, self.key])
+        return "".join([self.prefix, self.key])
 
     def __set_name__(self, owner, name):
         if self.key is None:
@@ -117,6 +117,7 @@ class env:
     def tuple(cls, *args, **kwargs):
         return cls(cast=cast.as_tuple, *args, **kwargs)
 
+
 # Target supported env types:
 # + str : noop
 # + int : int()
@@ -136,17 +137,17 @@ class BaseSettings:
         super().__init_subclass__(**kwargs)
 
     @classmethod
-    def use(cls, env='DJANGO_MODE'):
-        '''Helper for accessing sub-classes via env var name'''
-        base = os.environ.get(env, '')
-        name = f'{base.title()}Settings'
+    def use(cls, env="DJANGO_MODE"):
+        """Helper for accessing sub-classes via env var name"""
+        base = os.environ.get(env, "")
+        name = f"{base.title()}Settings"
         return cls.__children[name].getattr_factory()
 
     @classmethod
     def getattr_factory(cls):
-        '''
+        """
         Returns a function to be used as __getattr__ in a module.
-        '''
+        """
         self = cls()
 
         def __getattr__(key, self=self):

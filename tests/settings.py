@@ -10,11 +10,11 @@ class Settings(BaseSettings):
 
     @env
     def STR_ENV(self):
-        return 'default'
+        return "default"
 
     @env
     def STR_REQUIRED(self):
-        raise ValueError('STR_REQUIRED not set')
+        raise ValueError("STR_REQUIRED not set")
 
     @env.bool
     def BOOL_ENV(self):

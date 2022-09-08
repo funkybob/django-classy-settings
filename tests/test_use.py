@@ -2,15 +2,10 @@ import importlib
 import os
 import unittest
 
-import cbs
-from cbs import env
-
-
 from . import settings  # So reload works first time
 
 
 class TestSettingsUse(unittest.TestCase):
-
     def setUp(self):
         os.environ.clear()
 
@@ -18,9 +13,9 @@ class TestSettingsUse(unittest.TestCase):
         importlib.reload(settings)
 
         self.assertTrue(settings.DEBUG)
-        self.assertEqual(settings.STR_ENV, 'default')
+        self.assertEqual(settings.STR_ENV, "default")
         self.assertFalse(settings.BOOL_ENV)
-        self.assertEqual(settings.METHOD, 'True')
+        self.assertEqual(settings.METHOD, "True")
 
         self.assertEqual(settings.IMMEDIATE_INT, 5432)
 
@@ -28,26 +23,26 @@ class TestSettingsUse(unittest.TestCase):
             settings.STR_REQUIRED
 
     def test_use_prod(self):
-        os.environ['DJANGO_MODE'] = 'prod'
-        os.environ['IMMEDIATE_INT'] = '2345'
+        os.environ["DJANGO_MODE"] = "prod"
+        os.environ["IMMEDIATE_INT"] = "2345"
 
         importlib.reload(settings)
 
         self.assertFalse(settings.DEBUG)
-        self.assertEqual(settings.STR_ENV, 'default')
+        self.assertEqual(settings.STR_ENV, "default")
         self.assertTrue(settings.BOOL_ENV)
-        self.assertEqual(settings.METHOD, 'False')
+        self.assertEqual(settings.METHOD, "False")
 
         self.assertEqual(settings.IMMEDIATE_INT, 2345)
 
     def test_use_env(self):
-        os.environ['DJANGO_MODE'] = 'prod'
-        os.environ['STR_ENV'] = 'override'
-        os.environ['BOOL_ENV'] = 'f'
+        os.environ["DJANGO_MODE"] = "prod"
+        os.environ["STR_ENV"] = "override"
+        os.environ["BOOL_ENV"] = "f"
 
         importlib.reload(settings)
 
         self.assertFalse(settings.DEBUG)
-        self.assertEqual(settings.STR_ENV, 'override')
+        self.assertEqual(settings.STR_ENV, "override")
         self.assertFalse(settings.BOOL_ENV)
-        self.assertEqual(settings.METHOD, 'False')
+        self.assertEqual(settings.METHOD, "False")
