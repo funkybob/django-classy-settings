@@ -5,7 +5,7 @@ Inspired by dj_database_url
 '''
 from urllib.parse import parse_qs, unquote, urlparse
 
-from .utils import as_bool
+from .cast import as_bool
 
 ENGINE_MAP = {
     'postgres': 'django.db.backends.postgresql',

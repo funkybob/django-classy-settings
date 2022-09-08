@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-classy-settings"
-version = "2.1.1"
+version = "3.0.0"
 description = "Simple class-based settings for Django"
 authors = ["Curtis Maloney <curtis@tinbrain.net>"]
 readme = "README.md"
@@ -28,6 +28,9 @@ python = "^3.7"
 Django = "*"
 
 [tool.poetry.dev-dependencies]
+coverage = "^6.4.4"
+flake8 = "^5.0.4"
+isort = "^5.10.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

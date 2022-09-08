@@ -1,11 +1,9 @@
 
-from functools import partial
-import importlib
-from inspect import ismethod
 import os
+from functools import cached_property, partial
 
-from .utils import as_bool
-
+from . import cast
+from .urls import parse_dburl
 
 DEFAULT_ENV_PREFIX = ''
 
@@ -19,7 +17,6 @@ class env:
         return 'default'
 
     You can override the key to use in the env:
-
 
     @env(key='OTHER_NAME')
     def SETTINGS_NAME(self):
@@ -37,6 +34,17 @@ class env:
 
     @env(cast=int)
     def SETTING(self):
+
+    Alternatively there are helpers for common castings:
+
+    @env.int
+    @env.bool
+    @env.dburl
+    @env.list
+
+    Additionally, it can be used as a property for immediate values.
+
+    DEBUG = env.bool(True)
     '''
     def __new__(cls, *args, **kwargs):
         if not args:
@@ -44,90 +52,107 @@ class env:
         return object.__new__(cls)
 
     def __init__(self, getter, key=None, cast=None, prefix=None):
-        self.getter = getter
+        '''
+        `getter` may be a method, or a constant value
+        '''
         self.cast = cast
-        if key is None and getter is not None:
-            key = getter.__name__
+
         if prefix is None:
             prefix = DEFAULT_ENV_PREFIX
         self.prefix = prefix
-        self._set_name(key)
 
-    def _set_name(self, name):
-        self.key = name
-        if name:
-            self.var_name = ''.join([self.prefix, name])
+        self.key = key
 
-    def __get__(self, obj, klass=None):
+        if callable(getter):
+            self.getter = getter
+            if not key:
+                key = getter.__name__
+        else:
+            self.getter = None
+            self.default = getter
+
+    @cached_property
+    def env_name(self):
+        return ''.join([self.prefix, self.key])
+
+    def __set_name__(self, owner, name):
+        if self.key is None:
+            self.key = name
+
+    def __get__(self, obj, cls=None):
         if obj is None:
             return self
         try:
-            value = os.environ[self.var_name]
+            value = os.environ[self.env_name]
         except KeyError:
             if self.getter is None:
-                raise RuntimeError(
-                    f'You must set the {self.var_name} environment variable.'
-                )
-            value = self.getter(obj)
+                value = self.default
+            else:
+                value = self.getter(obj)
         else:
             if self.cast:
                 value = self.cast(value)
         obj.__dict__[self.key] = value
         return value
 
-    def __set_name__(self, owner, name):
-        if self.key is None:
-            self._set_name(name)
+    @classmethod
+    def bool(cls, *args, **kwargs):
+        return cls(cast=cast.as_bool, *args, **kwargs)
+
+    @classmethod
+    def int(cls, *args, **kwargs):
+        return cls(cast=int, *args, **kwargs)
+
+    @classmethod
+    def dburl(cls, *args, **kwargs):
+        return cls(cast=parse_dburl, *args, **kwargs)
+
+    @classmethod
+    def list(cls, *args, **kwargs):
+        return cls(cast=cast.as_list, *args, **kwargs)
+
+    @classmethod
+    def tuple(cls, *args, **kwargs):
+        return cls(cast=cast.as_tuple, *args, **kwargs)
+
+# Target supported env types:
+# + str : noop
+# + int : int()
+# + bool: as_bool
+# + list<str>
+# - list<int>
+# + tuple<str>
+# + DB Config: db-url
+# - Cache Config: db-url
 
 
-class envbool(env):
-    '''
-    A special case of env that returns a boolean.
-    '''
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault('cast', as_bool)
-        super().__init__(*args, **kwargs)
+class BaseSettings:
+    __children = {}
 
+    def __init_subclass__(cls, **kwargs):
+        cls.__children[cls.__name__] = cls
+        super().__init_subclass__(**kwargs)
 
-def apply(name, to):
-    '''
-    Apply settings to ``to``, which is expected to be globals().
+    @classmethod
+    def use(cls, env='DJANGO_MODE'):
+        '''Helper for accessing sub-classes via env var name'''
+        base = os.environ.get(env, '')
+        name = f'{base.title()}Settings'
+        return cls.__children[name].getattr_factory()
 
-    Place at the end of settings.py / settings/__init__.py to apply a given
-    settings class.
+    @classmethod
+    def getattr_factory(cls):
+        '''
+        Returns a function to be used as __getattr__ in a module.
+        '''
 
-    Pass a settings class:
-        cbs.apply(MySettings, globals())
+        self = cls()
+        def __getattr__(key, self=self):
+            if not key.isupper():
+                raise AttributeError(key)
+            val = getattr(self, key)
+            if callable(val):
+                val = val()
+            return val
 
-    Pass a class name:
-        cbs.apply('MySettings', globals())
-
-    Pass an import path:
-        cbs.apply('settings.my.MySettings', globals())
-
-    '''
-    if isinstance(name, str):
-        if '.' in name:
-            module, obj_name = name.rsplit('.', 1)
-            module = importlib.import_module(module)
-            obj = getattr(module, obj_name)
-        else:
-            obj = to.get(name)
-    else:
-        obj = name
-
-    if obj is None:
-        raise ValueError('Could not find settings class: %r', name)
-
-    settings = obj()
-
-    def resolve_callable(value):
-        if ismethod(value):
-            return value()
-        return value
-
-    to.update({
-        key: resolve_callable(getattr(settings, key))
-        for key in dir(settings)
-        if key.isupper()
-    })
+        return __getattr__

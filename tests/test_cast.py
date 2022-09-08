@@ -1,6 +1,6 @@
 import unittest
 
-from cbs.utils import as_bool, as_list, as_tuple
+from cbs.cast import as_bool, as_list, as_tuple
 
 
 class UtilsEnv(unittest.TestCase):
