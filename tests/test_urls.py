@@ -24,3 +24,10 @@ class TestUrlParse(TestCase):
                 },
             },
         )
+
+    def test_sqlite(self):
+        result = parse_dburl("sqlite:///db.sqlite")
+
+        self.assertEqual(
+            result, {"ENGINE": "django.db.backends.sqlite3", "NAME": "db.sqlite"}
+        )
