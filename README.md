@@ -38,3 +38,12 @@ In your `settings.py`
             raise ValueError("Must set STATIC_ROOT!")
 
     __getattr__ = BaseSettings.use()
+
+
+Switch between ``Settings`` and ``ProdSettings`` using the ``DJANGO_MODE`` env var:
+
+    # Run default Settings
+    $ ./manage.py test
+
+    # Run ProdSettings
+    $ DJANGO_MODE=prod ./manage.py test
