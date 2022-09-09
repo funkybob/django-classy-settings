@@ -192,7 +192,7 @@ might use `django-classy-settings`:
 Now when you start Django, it will use all of your global settings, and any
 from ``Settings``.
 
-You can switch to using the ``TestSettings`` by setting the `DJANGO_MODE`
+You can switch to using the ``ProdSettings`` by setting the `DJANGO_MODE`
 environment variable:
 
 .. code-block:: bash
