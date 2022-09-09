@@ -203,6 +203,8 @@ environment variable:
     # Use ProdSettings
     $ DJANGO_MODE=prod ./manage.py shell
 
+``BaseSettings.use()`` picks the ``BaseSettings`` sub-class named ``{DJANGO_MODE.title()}Settings``.
+
 `BaseSettings`
 --------------
 
