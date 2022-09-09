@@ -197,6 +197,10 @@ environment variable:
 
 .. code-block:: bash
 
+    # Use default Settings
+    $ ./manage.py shell
+
+    # Use ProdSettings
     $ DJANGO_MODE=prod ./manage.py shell
 
 `BaseSettings`
