@@ -321,7 +321,7 @@ with `DJANGO_`
 
     class Settings(BaseSettings):
 
-        DEBUG = env(True)
+        DEBUG = denv(True)
 
 
 Now setting ``DJANGO_DEBUG=f`` will disable debug mode.
