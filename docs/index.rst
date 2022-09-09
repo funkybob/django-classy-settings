@@ -140,6 +140,7 @@ might use `django-classy-settings`:
         # DEBUG defaults to True, but can be overridden by env var `DJANGO_DEBUG`
         DEBUG = env.bool(True, prefix='DJANGO_')
 
+        # Methods will be transparently invoked by the __getattr__ implementation
         def INSTALLED_APPS(self):
             return [
                 'django.contrib.admin',
@@ -203,23 +204,8 @@ environment variable:
     # Use ProdSettings
     $ DJANGO_MODE=prod ./manage.py shell
 
-``BaseSettings.use()`` picks the ``BaseSettings`` sub-class named ``{DJANGO_MODE.title()}Settings``.
-
-`BaseSettings`
---------------
-
-The `BaseSettings` class performs two roles:
-
-#. Provides a factory for a module-level ``__getattr__`` function.
-
-   This allows the class to transparently hook into your `settings.py`
-
-#. Provides the ``use`` classmethod.
-
-   This will take the value of the environment variable `DJANGO_MODE` and use it
-   to find any sub-class of ``BaseSettings`` with that name, returning a
-   ``__getattr__`` method using it.
-
+``BaseSettings.use()`` picks the ``BaseSettings`` sub-class named
+``{DJANGO_MODE.title()}Settings``.
 
 The `env` property
 ------------------
