@@ -1,5 +1,7 @@
 import os
-from functools import cached_property, partial
+from functools import partial
+
+from django.utils.functional import cached_property
 
 from . import cast
 from .urls import parse_dburl
