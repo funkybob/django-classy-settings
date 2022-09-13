@@ -3,4 +3,5 @@ version: 2
 
 python:
   install:
-  - requirements: Django
+    - method: pip
+      path: .
