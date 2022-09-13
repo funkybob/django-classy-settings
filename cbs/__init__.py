@@ -25,9 +25,7 @@ class env:
         Catch case when we're used as a decorator with keyword arguments, or
         used to pre-set some defaults.
         """
-        if not args:
-            return partial(cls, **kwargs)
-        return object.__new__(cls)
+        return object.__new__(cls) if args else partial(cls, **kwargs)
 
     def __init__(self, getter, key=None, cast=None, prefix=None):
         self.cast = cast
@@ -59,11 +57,7 @@ class env:
         try:
             value = os.environ[self.env_name]
         except KeyError:
-            if self.getter is None:
-                value = self.default
-            else:
-                value = self.getter(obj)
-
+            value = self.default if self.getter is None else self.getter(obj)
         if self.cast and isinstance(value, str):
             value = self.cast(value)
 
