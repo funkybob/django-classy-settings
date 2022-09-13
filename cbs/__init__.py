@@ -74,7 +74,7 @@ class env:
     def bool(cls, *args, **kwargs):
         """Helper for bool-cast settings.
 
-        Uses :py:func:`.cast.to_bool`
+        Uses :py:func:`.cast.as_bool`
         """
         return cls(cast=cast.as_bool, *args, **kwargs)
 
