@@ -33,4 +33,4 @@ class ProdSettings(Settings):
         return True
 
 
-__getattr__ = BaseSettings.use()
+__getattr__, __dir__ = BaseSettings.use()
