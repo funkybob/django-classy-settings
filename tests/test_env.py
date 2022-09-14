@@ -14,17 +14,16 @@ class EnvTestCase(unittest.TestCase):
 
 
 class TestPartial(EnvTestCase):
-
     def test_prefix(self):
 
-        denv = env['DJANGO_']
+        denv = env["DJANGO_"]
 
         class Settings:
-            SETTING = denv('value')
+            SETTING = denv("value")
             BOOL = denv.bool(True)
 
-        os.environ['DJANGO_SETTING'] = 'override'
-        self.assertEqual(Settings().SETTING, 'override')
+        os.environ["DJANGO_SETTING"] = "override"
+        self.assertEqual(Settings().SETTING, "override")
 
 
 class TestImmediate(EnvTestCase):

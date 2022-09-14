@@ -19,6 +19,7 @@ class env:
     :param func cast: Function to cast ``str`` values.
 
     """
+
     PREFIX = ""
 
     def __new__(cls, *args, **kwargs):
@@ -76,7 +77,7 @@ class env:
 
     def __class_getitem__(cls, key):
         """Helper to allow creating env sub-classes with PREFIX pre-set."""
-        return type(f'{cls.__name__}__{key}', (cls,), {'PREFIX': key})
+        return type(f"{cls.__name__}__{key}", (cls,), {"PREFIX": key})
 
     @classmethod
     def bool(cls, *args, **kwargs):
@@ -191,9 +192,7 @@ class BaseSettings:
         self = cls()
         pkg = getmodule(cls)
 
-        keys = [
-            x for x in vars(pkg).keys() if x.isupper()
-        ] + [
+        keys = [x for x in vars(pkg).keys() if x.isupper()] + [
             x for x in dir(cls) if x.isupper()
         ]
 
