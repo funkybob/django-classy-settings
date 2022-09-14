@@ -27,9 +27,7 @@ class env:
         Catch case when we're used as a decorator with keyword arguments, or
         used to pre-set some defaults.
         """
-        if not args:
-            return partial(cls, **kwargs)
-        return object.__new__(cls)
+        return object.__new__(cls) if args else partial(cls, **kwargs)
 
     def __init__(self, getter, key=None, cast=None, prefix=None):
         self.cast = cast
@@ -192,9 +190,10 @@ class BaseSettings:
 
         pkg = getmodule(cls)
 
-        keys = [x for x in vars(pkg).keys() if x.isupper()] + [
+        keys = [x for x in vars(pkg) if x.isupper()] + [
             x for x in dir(cls) if x.isupper()
         ]
+
 
         def __dir__(keys=keys):
             return keys

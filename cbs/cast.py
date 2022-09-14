@@ -14,9 +14,9 @@ def as_bool(value: str) -> bool:
     if isinstance(value, bool):
         return value
     value = value.strip().lower()
-    if value in ("y", "yes", "on", "t", "true", "1"):
+    if value in {"y", "yes", "on", "t", "true", "1"}:
         return True
-    if value in ("n", "no", "off", "f", "false", "0"):
+    if value in {"n", "no", "off", "f", "false", "0"}:
         return False
     raise ValueError("Unrecognised value for bool: %r" % value)
 
@@ -34,6 +34,4 @@ def as_tuple(value: str) -> tuple:
     """
     Smart cast value to tuple by splittng the input on ",".
     """
-    if isinstance(value, tuple):
-        return value
-    return tuple(as_list(value))
+    return value if isinstance(value, tuple) else tuple(as_list(value))
