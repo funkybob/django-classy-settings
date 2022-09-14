@@ -7,8 +7,8 @@ def as_bool(value: str) -> bool:
 
     :param str value: Value to cast.
         Value will be stripped and ``.lower()``.
-        Values in ``("y", "yes", "on", "t", "true", "1")`` will be treated as True
-        Values in ``("n", "no", "off", "f", "false", "0")`` will be treated as False
+        True values: ``("y", "yes", "on", "t", "true", "1")``
+        False values: ``("n", "no", "off", "f", "false", "0")``
         All other values raise a ``ValueError``
     """
     if isinstance(value, bool):

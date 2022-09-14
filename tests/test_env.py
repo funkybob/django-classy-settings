@@ -1,7 +1,6 @@
 import os
 import unittest
 
-import cbs
 from cbs import env
 
 
@@ -11,6 +10,19 @@ class EnvTestCase(unittest.TestCase):
         Clear the env dict before each test.
         """
         os.environ.clear()
+
+
+class TestPartial(EnvTestCase):
+    def test_prefix(self):
+
+        denv = env["DJANGO_"]
+
+        class Settings:
+            SETTING = denv("value")
+            BOOL = denv.bool(True)
+
+        os.environ["DJANGO_SETTING"] = "override"
+        self.assertEqual(Settings().SETTING, "override")
 
 
 class TestImmediate(EnvTestCase):

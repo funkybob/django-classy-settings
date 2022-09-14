@@ -6,7 +6,8 @@ from cbs.urls import parse_dburl
 class TestUrlParse(TestCase):
     def test_simple(self):
         result = parse_dburl(
-            "postgres://user:password@hostname:1234/dbname?conn_max_age=15&local_option=test"
+            "postgres://user:password@hostname:1234/dbname"
+            "?conn_max_age=15&local_option=test"
         )
 
         self.assertEqual(
@@ -29,5 +30,9 @@ class TestUrlParse(TestCase):
         result = parse_dburl("sqlite:///db.sqlite")
 
         self.assertEqual(
-            result, {"ENGINE": "django.db.backends.sqlite3", "NAME": "db.sqlite"}
+            result,
+            {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": "db.sqlite",
+            },
         )

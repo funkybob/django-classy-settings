@@ -2,7 +2,8 @@
 
 from cbs import BaseSettings, env
 
-GLOBAL = 'global'
+GLOBAL = "global"
+
 
 class Settings(BaseSettings):
     DEBUG = True
@@ -33,4 +34,4 @@ class ProdSettings(Settings):
         return True
 
 
-__getattr__ = BaseSettings.use()
+__getattr__, __dir__ = BaseSettings.use()

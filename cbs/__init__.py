@@ -20,6 +20,8 @@ class env:
 
     """
 
+    PREFIX = ""
+
     def __new__(cls, *args, **kwargs):
         """
         Catch case when we're used as a decorator with keyword arguments, or
@@ -32,7 +34,7 @@ class env:
     def __init__(self, getter, key=None, cast=None, prefix=None):
         self.cast = cast
 
-        self.prefix = prefix or ""
+        self.prefix = prefix or self.PREFIX
 
         self.key = key
 
@@ -62,13 +64,20 @@ class env:
             if self.getter is None:
                 value = self.default
             else:
-                value = self.getter(obj)
+                try:
+                    value = self.getter(obj)
+                except Exception as e:
+                    raise e from None
 
         if self.cast and isinstance(value, str):
             value = self.cast(value)
 
         obj.__dict__[self.key] = value
         return value
+
+    def __class_getitem__(cls, key):
+        """Helper to allow creating env sub-classes with PREFIX pre-set."""
+        return type(f"{cls.__name__}__{key}", (cls,), {"PREFIX": key})
 
     @classmethod
     def bool(cls, *args, **kwargs):
@@ -142,11 +151,18 @@ class BaseSettings:
         ``getattr__factory`` on it.
 
         :param str env: Envirionment variable to get settings mode name from.
-        :return: function suitable for module-level ``__getattr__``
+        :return: functions suitable for module-level ``__getattr__`` and
+            ``__dir__``
         """
         base = os.environ.get(env, "")
         name = f"{base.title()}Settings"
-        return cls.__children[name].getattr_factory()
+
+        Settings = cls.__children[name]
+
+        return (
+            Settings.getattr_factory(),
+            Settings.dir_factory(),
+        )
 
     @classmethod
     def getattr_factory(cls):
@@ -165,3 +181,22 @@ class BaseSettings:
             return val
 
         return __getattr__
+
+    @classmethod
+    def dir_factory(cls):
+        """Returns a function to be used as __dir__ in a module.
+
+        :return: function suitable for module-level ``__dir__``
+        """
+        from inspect import getmodule
+
+        pkg = getmodule(cls)
+
+        keys = [x for x in vars(pkg).keys() if x.isupper()] + [
+            x for x in dir(cls) if x.isupper()
+        ]
+
+        def __dir__(keys=keys):
+            return keys
+
+        return __dir__

@@ -187,7 +187,7 @@ might use `django-classy-settings`:
 
     # The `use` method will find the right sub-class of ``BaseSettings`` to use
     # Based on the value of the `DJANGO_MODE` env var.
-    __getattr__ = Settings.use()
+    __getattr__, __dir__ = Settings.use()
 
 
 Now when you start Django, it will use all of your global settings, and any
@@ -220,7 +220,7 @@ The simplest use case is with an immediate value:
 
         FOO = env('default')
 
-    __getattr__ = BaseSettings.use()
+    __getattr__, __dir__ = BaseSettings.use()
 
 
 In this case, if the `FOO` environment variable is set, then ``settings.FOO``
@@ -309,11 +309,11 @@ with `DJANGO_`
 .. code-block:: python
 
     # Common prefix for REDIS related settings
-    denv = env(prefix='DJANGO_')
+    denv = env['DJANGO_']
 
     class Settings(BaseSettings):
 
-        DEBUG = denv(True)
+        DEBUG = denv(True)  # Will look for DJANGO_DEBUG in env
 
 
 Now setting ``DJANGO_DEBUG=f`` will disable debug mode.
