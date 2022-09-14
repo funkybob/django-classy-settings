@@ -12,6 +12,8 @@ class TestSettingsUse(unittest.TestCase):
     def test_use(self):
         importlib.reload(settings)
 
+        self.assertEqual(settings.GLOBAL, 'global')
+
         self.assertTrue(settings.DEBUG)
         self.assertEqual(settings.STR_ENV, "default")
         self.assertFalse(settings.BOOL_ENV)

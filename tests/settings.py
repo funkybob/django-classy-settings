@@ -2,6 +2,7 @@
 
 from cbs import BaseSettings, env
 
+GLOBAL = 'global'
 
 class Settings(BaseSettings):
     DEBUG = True
