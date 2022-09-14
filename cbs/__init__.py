@@ -151,7 +151,8 @@ class BaseSettings:
         ``getattr__factory`` on it.
 
         :param str env: Envirionment variable to get settings mode name from.
-        :return: functions suitable for module-level ``__getattr__`` and ``__dir__``
+        :return: functions suitable for module-level ``__getattr__`` and
+            ``__dir__``
         """
         base = os.environ.get(env, "")
         name = f"{base.title()}Settings"
@@ -189,7 +190,6 @@ class BaseSettings:
         """
         from inspect import getmodule
 
-        self = cls()
         pkg = getmodule(cls)
 
         keys = [x for x in vars(pkg).keys() if x.isupper()] + [

@@ -11,9 +11,11 @@ class UtilsEnv(unittest.TestCase):
             self.assertTrue(as_bool(value))
         for value in no:
             self.assertFalse(as_bool(value))
-        self.assertRaisesRegex(
-            ValueError, "Unrecognised value for bool: 'blub blah'", as_bool, "blub blah"
-        )
+        with self.assertRaisesRegex(
+            ValueError,
+            "Unrecognised value for bool: 'blub blah'",
+        ):
+            as_bool("blub blah")
 
     def test_as_list(self):
         values = (

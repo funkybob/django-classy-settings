@@ -1,7 +1,6 @@
 import os
 import unittest
 
-import cbs
 from cbs import env
 
 

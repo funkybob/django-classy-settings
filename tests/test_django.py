@@ -7,4 +7,4 @@ class DjangoTestCase(TestCase):
     def test_settings(self):
 
         with self.assertRaises(ValueError):
-            settings = Settings("tests.settings")
+            Settings("tests.settings")
