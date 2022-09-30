@@ -192,11 +192,11 @@ class BaseSettings:
 
         pkg = getmodule(cls)
 
-        keys = [x for x in vars(pkg).keys() if x.isupper()] + [
-            x for x in dir(cls) if x.isupper()
-        ]
-
-        def __dir__(keys=keys):
-            return keys
+        def __dir__(pkg=pkg):
+            return [
+                x for x in vars(pkg).keys() if x.isupper()
+            ] + [
+                x for x in dir(cls) if x.isupper()
+            ]
 
         return __dir__
