@@ -140,6 +140,9 @@ might use `django-classy-settings`:
         # DEBUG defaults to True, but can be overridden by env var `DJANGO_DEBUG`
         DEBUG = env.bool(True, prefix='DJANGO_')
 
+        # Simple cases that don't need `self` can even use a lambda
+        MEDIA_ROOT = env(lambda self: BASE_DIR / 'media')
+
         # Methods will be transparently invoked by the __getattr__ implementation
         def INSTALLED_APPS(self):
             return filter(None, [
@@ -206,6 +209,9 @@ environment variable:
 
 ``BaseSettings.use()`` picks the ``BaseSettings`` sub-class named
 ``{DJANGO_MODE.title()}Settings``.
+
+.. note:: Since the registry of subclasses is on ``BaseSettings``, you can call
+    ``.use()`` on any sub-class and it will behave the same.
 
 The `env` property
 ------------------
