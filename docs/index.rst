@@ -142,7 +142,7 @@ might use `django-classy-settings`:
 
         # Methods will be transparently invoked by the __getattr__ implementation
         def INSTALLED_APPS(self):
-            return [
+            return filter(None, [
                 'django.contrib.admin',
                 'django.contrib.auth',
                 'django.contrib.contenttypes',
@@ -151,10 +151,10 @@ might use `django-classy-settings`:
                 'django.contrib.staticfiles',
                 # Conditionally include an app
                 'debug_toolbar' if self.DEBUG else None,
-            ].filter()
+            ])
 
         def MIDDLEWARE(self):
-            return [
+            return filter(None, [
                 'django.middleware.security.SecurityMiddleware',
                 'django.contrib.sessions.middleware.SessionMiddleware',
                 'django.middleware.common.CommonMiddleware',
@@ -164,7 +164,7 @@ might use `django-classy-settings`:
                 'django.middleware.clickjacking.XFrameOptionsMiddleware',
                 # Conditionally include a middleware
                 'debug_toolbar.middleware.DebugToolbarMiddleware' if self.DEBUG else False,
-            ].filter()
+            ])
 
         # Parse the URL into a database config dict.
         DEFAULT_DATABASE = env.dburl('sqlite:///db.sqlite')
