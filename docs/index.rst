@@ -314,7 +314,7 @@ with `DJANGO_`
 
 .. code-block:: python
 
-    # Common prefix for REDIS related settings
+    # Common prefix for DJANGO related settings
     denv = env['DJANGO_']
 
     class Settings(BaseSettings):

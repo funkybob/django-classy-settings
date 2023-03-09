@@ -23,7 +23,7 @@ def as_bool(value: str) -> bool:
 
 def as_list(value: str) -> list:
     """
-    Smart cast value to list by splittng the input on ",".
+    Smart cast value to list by splitting the input on ",".
     """
     if isinstance(value, list):
         return value
@@ -32,7 +32,7 @@ def as_list(value: str) -> list:
 
 def as_tuple(value: str) -> tuple:
     """
-    Smart cast value to tuple by splittng the input on ",".
+    Smart cast value to tuple by splitting the input on ",".
     """
     if isinstance(value, tuple):
         return value
