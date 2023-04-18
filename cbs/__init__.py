@@ -75,6 +75,9 @@ class env:
         obj.__dict__[self.key] = value
         return value
 
+    def __call__(self):
+        return self.__get__(self)
+
     def __class_getitem__(cls, key):
         """Helper to allow creating env sub-classes with PREFIX pre-set."""
         return type(f"{cls.__name__}__{key}", (cls,), {"PREFIX": key})

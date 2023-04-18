@@ -25,6 +25,15 @@ class TestPartial(EnvTestCase):
         self.assertEqual(Settings().SETTING, "override")
 
 
+class TestCallable(EnvTestCase):
+    def test_default(self):
+        TEST = env("default", key="TEST")
+
+        os.environ["TEST"] = "test"
+
+        self.assertEqual(TEST(), "test")
+
+
 class TestImmediate(EnvTestCase):
     def test_default(self):
         class Settings:

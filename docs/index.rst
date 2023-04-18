@@ -213,6 +213,25 @@ environment variable:
 .. note:: Since the registry of subclasses is on ``BaseSettings``, you can call
     ``.use()`` on any sub-class and it will behave the same.
 
+Which settings to move?
+=======================
+
+Generally, only move settings which are either environment driven, or need
+per-mode control.
+
+Because of the precedence rules of Python's module level ``__getattr__``
+function, any settings declared outside a class can *not* be overridden by a
+class-based setting.
+
+.. code-block:: python
+
+    GLOBAL = "global"
+
+    class Settings(BaseSettings):
+        GLOBAL = "local"  # This setting will never be used
+
+
+
 The `env` property
 ------------------
 

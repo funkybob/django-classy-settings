@@ -34,4 +34,8 @@ class ProdSettings(Settings):
         return True
 
 
+class GlobalSettings(Settings):
+    GLOBAL = "local"
+
+
 __getattr__, __dir__ = BaseSettings.use()
