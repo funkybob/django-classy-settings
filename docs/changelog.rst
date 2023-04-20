@@ -1,6 +1,33 @@
 Change Log
 ==========
 
+3.0.2 (2023-04-20)
+------------------
+
+Housekeeping:
+
+- Added Django 4.2 to CI
+- Added Python 3.11 to CI
+- Dropped Django 2.2 from CI
+- Documentation corrections and clarifications
+
+Features Added:
+
+- `__dir__` now calculates visible attributes every call, instead of when it's constructed.
+- `env` instances are now callable, making them somewhat usable outside of classes
+
+3.0.1 (2022-09-15)
+------------------
+
+.. warning:: The previous release does not work with Django.
+
+   This release is to fix that glaring mistake.
+
+Bugs Fixed:
+
+- Changed to using lookup syntax to creat prefixed env classes
+- Added __dir__ as second return value from `use()` to satisfy Django settings
+
 3.0.0 (2022-09-08)
 ------------------
 
