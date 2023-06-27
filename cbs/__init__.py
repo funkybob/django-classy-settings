@@ -27,6 +27,8 @@ class env:
         Catch case when we're used as a decorator with keyword arguments, or
         used to pre-set some defaults.
         """
+        if not args and not kwargs:
+            raise TypeError('env requires positional or keyword arguments')
         if not args:
             return partial(cls, **kwargs)
         return object.__new__(cls)

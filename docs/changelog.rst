@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+3.0.3 (2023-06-28)
+------------------
+
+Features Added:
+
+- Raise exception when `env()` is called without any arguments at all.
+
 3.0.2 (2023-04-20)
 ------------------
 
