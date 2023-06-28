@@ -33,6 +33,25 @@ class TestCallable(EnvTestCase):
 
         self.assertEqual(TEST(), "test")
 
+    def test_no_arguments(self):
+        '''
+        env() can't sensibly be called without _any_ arguments.
+
+        Proper usage is one of:
+            FOO = env(default)
+
+            FOO = env(key=value, ...)
+
+            # Implicitly called with foo as argument
+            @env
+            def foo(...):
+
+            @env(key=value, ...)
+            def foo(...):
+        '''
+        with self.assertRaises(TypeError):
+            env()
+
 
 class TestImmediate(EnvTestCase):
     def test_default(self):
