@@ -41,7 +41,7 @@ might use `django-classy-settings`:
 .. code-block:: python
    :caption: settings.py
    :linenos:
-   :emphasize-lines: 15,90-129,132-140,142-144
+   :emphasize-lines: 15,89-132,135-143,145-147
 
     """
     Django settings for dummy project.
@@ -105,7 +105,6 @@ might use `django-classy-settings`:
             'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
         },
     ]
-
 
     # Internationalization
     # https://docs.djangoproject.com/en/3.2/topics/i18n/
