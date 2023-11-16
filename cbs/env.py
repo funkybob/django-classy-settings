@@ -45,6 +45,10 @@ class env:
             return partial(cls, **kwargs)
         return object.__new__(cls)
 
+    def __class_getitem__(cls, key):
+        """Helper to allow creating env sub-classes with PREFIX pre-set."""
+        return type(f"{cls.__name__}__{key}", (cls,), {"PREFIX": key})
+
     def __init__(self, getter, key=None, cast=None, prefix=None):
         self.cast = cast
 
@@ -91,10 +95,6 @@ class env:
 
     def __call__(self):
         return self.__get__(self)
-
-    def __class_getitem__(cls, key):
-        """Helper to allow creating env sub-classes with PREFIX pre-set."""
-        return type(f"{cls.__name__}__{key}", (cls,), {"PREFIX": key})
 
     @classmethod
     def bool(cls, *args, **kwargs):
