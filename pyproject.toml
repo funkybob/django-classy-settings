@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-classy-settings"
-version = "3.0.3"
+version = "3.0.4"
 description = "Simple class-based settings for Django"
 license = "BSD-2-Clause"
 authors = ["Curtis Maloney <curtis@tinbrain.net>"]
