@@ -1,6 +1,20 @@
 Change Log
 ==========
 
+3.0.4 (2023-11-16)
+------------------
+
+Features Added:
+
+- Guarantee a `Settings` class is only instantiated once per call to `use()`
+  Note: `getattr_factory` and `dir_factory` are no longer classmethods.
+- Break out `get_settings_instance` method from `use` for more flexibility.
+- Add more helpful error message when a sub-class can't be found.
+
+Cleanup:
+
+- Moved `BaseSettings` out of `__init__` into its own file.
+
 3.0.3 (2023-06-28)
 ------------------
 
@@ -52,7 +66,7 @@ Features Added:
 
 - Pre-canned typed `env` helpers: `env.bool`, `env.int`, `env.dburl`,
   `env.list`, `env.tuple`
-- `BaseSetings` class, with `getattr_factory` and auto-subclass resolution.
+- `BaseSettings` class, with `getattr_factory` and auto-subclass resolution.
 
 2.1.1 (2017-09-22)
 ------------------
