@@ -13,3 +13,8 @@ class TestPython(unittest.TestCase):
         importlib.reload(settings)
 
         self.assertEqual(settings.GLOBAL, "global")
+
+    def test_non_upper(self):
+        '''We only allow access to SHOUTY_SNAKE_CASE names.'''
+        with self.assertRaises(AttributeError):
+            settings.private

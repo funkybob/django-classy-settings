@@ -51,15 +51,11 @@ class env:
 
     def __init__(self, getter, key=None, cast=None, prefix=None):
         self.cast = cast
-
-        self.prefix = prefix or self.PREFIX
-
         self.key = key
+        self.prefix = prefix or self.PREFIX
 
         if callable(getter):
             self.getter = getter
-            if not key:
-                key = getter.__name__
         else:
             self.getter = None
             self.default = getter
