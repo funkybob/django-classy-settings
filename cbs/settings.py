@@ -37,7 +37,8 @@ class BaseSettings:
         Takes the value of ``os.environ[env]``, calls ``.title()`` on it, then
         appends `"Settings"`.
 
-        It will then find a sub-class of that name, and return an instance of it.
+        It will then find a sub-class of that name, and return an instance of
+        it.
 
         """
         base = os.environ.get(env, "")
@@ -46,7 +47,10 @@ class BaseSettings:
         try:
             return cls.__children[name]()
         except KeyError:
-            raise ValueError(f'Could not find Settings class for mode {base!r} (Known: {", ".join(cls.__children)})')
+            raise ValueError(
+                f'Could not find Settings class for mode {base!r} '
+                f'(Known: {", ".join(cls.__children)})',
+            )
 
     def getattr_factory(self):
         """Returns a function to be used as __getattr__ in a module.

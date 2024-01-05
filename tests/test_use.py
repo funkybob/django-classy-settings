@@ -52,5 +52,9 @@ class TestSettingsUse(unittest.TestCase):
     def test_use_unknown(self):
         os.environ["DJANGO_MODE"] = "mystery"
 
-        with self.assertRaises(ValueError, msg="Could not find Settings class for mode 'mystery' (Known: Settings, ProdSettings, GlobalSettings)"):
+        with self.assertRaises(
+            ValueError,
+            msg="Could not find Settings class for mode 'mystery' "
+                "(Known: Settings, ProdSettings, GlobalSettings)",
+        ):
             importlib.reload(settings)
