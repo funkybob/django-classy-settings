@@ -8,6 +8,8 @@ GLOBAL = "global"
 class Settings(BaseSettings):
     DEBUG = True
 
+    private = True
+
     IMMEDIATE_INT = env.int(5432)
 
     @env

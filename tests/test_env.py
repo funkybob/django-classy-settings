@@ -12,6 +12,17 @@ class EnvTestCase(unittest.TestCase):
         os.environ.clear()
 
 
+class TestProperty(EnvTestCase):
+    def test_class_access(self):
+        'Accessing the property on the class returns the property, not its value.'
+
+        _env = env("value")
+        class Settings:
+            ENV = _env
+
+        self.assertIs(Settings.ENV, _env)
+
+
 class TestPartial(EnvTestCase):
     def test_prefix(self):
 
