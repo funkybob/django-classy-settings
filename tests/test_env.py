@@ -14,9 +14,12 @@ class EnvTestCase(unittest.TestCase):
 
 class TestProperty(EnvTestCase):
     def test_class_access(self):
-        'Accessing the property on the class returns the property, not its value.'
-
+        """
+        Accessing the property on the class returns the property, not its
+        value.
+        """
         _env = env("value")
+
         class Settings:
             ENV = _env
 
