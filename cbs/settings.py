@@ -12,6 +12,12 @@ class BaseSettings:
         cls.__children[cls.__name__] = cls
         super().__init_subclass__(**kwargs)
 
+    def __getattribute__(self, name):
+        val = super().__getattribute__(name)
+        if name.isupper() and callable(val):
+            val = val()
+        return val
+
     @classmethod
     def use(cls, env="DJANGO_MODE"):
         """Helper for accessing sub-classes via env var name.
@@ -60,10 +66,7 @@ class BaseSettings:
         def __getattr__(key, self=self):
             if not key.isupper():
                 raise AttributeError(key)
-            val = getattr(self, key)
-            if callable(val):
-                val = val()
-            return val
+            return getattr(self, key)
 
         return __getattr__
 
