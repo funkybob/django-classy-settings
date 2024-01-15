@@ -27,6 +27,9 @@ class Settings(BaseSettings):
     def METHOD(self):
         return str(self.DEBUG)
 
+    def NESTED(self):
+        return self.METHOD
+
 
 class ProdSettings(Settings):
     DEBUG = False

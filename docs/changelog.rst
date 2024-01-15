@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+3.0.5 (2024-01-??)
+------------------
+
+Features Added:
+
+- All accesses to SHOUTY_SNAKE_CASE methods on a `BaseSettings` class will now
+  be treated as properties.
+  Previously accessing these from within a method would require remembering to
+  call it.
+
 3.0.4 (2023-11-16)
 ------------------
 
