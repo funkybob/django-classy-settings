@@ -6,11 +6,24 @@ API
 ``cbs``
 -------
 
-.. autoclass:: cbs.env
+.. automodule:: cbs
+
+``cbs.settings``
+----------------
+
+.. automodule:: cbs.settings
+
+.. autoclass:: cbs.settings.BaseSettings
+   :members: use, getattr_factory
+
+``cbs.env``
+-----------
+
+.. automodule:: cbs.env
+
+.. autoclass:: cbs.env.env
    :members: bool, int, dburl, list, tuple
 
-.. autoclass:: cbs.BaseSettings
-   :members: use, getattr_factory
 
 ``cbs.cast``
 ------------
@@ -25,5 +38,7 @@ API
 
 ``cbs.urls``
 ------------
+
+.. automodule:: cbs.urls
 
 .. autofunction:: cbs.urls.parse_dburl
