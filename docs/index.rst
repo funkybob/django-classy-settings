@@ -276,6 +276,9 @@ will be passed the value.
 
         FOO = env('default', cast=int)
 
+Pre-defined cast types
+~~~~~~~~~~~~~~~~~~~~~~
+
 For convenience, there are several built-in pre-defined cast types, accessible
 via the ``env`` decorator.
 
@@ -285,7 +288,7 @@ via the ``env`` decorator.
     env.int     # Use the int constructor
     env.dburl   # Converts URLs to Django DATABASES entries.
     env.list    # splits on ',', and strips each value
-    env.tuple   # as above, but yiels a tuple
+    env.tuple   # as above, but yields a tuple
 
 In all cases, if the default value passed is a string, it will be passed to the
 cast function.
