@@ -3,6 +3,7 @@ URL style config parsing.
 
 Inspired by dj_database_url
 """
+
 from urllib.parse import parse_qs, unquote, urlparse
 
 from .cast import as_bool
