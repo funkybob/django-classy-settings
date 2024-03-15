@@ -1,12 +1,12 @@
 import os
 
-__all__ = ['BaseSettings']
+__all__ = ["BaseSettings"]
 
 
 class BaseSettings:
     """Base class for env switchable settings configuration."""
 
-    __children = {}
+    __children = {}  # noqa: RUF012
 
     def __init_subclass__(cls, **kwargs):
         cls.__children[cls.__name__] = cls
@@ -54,8 +54,7 @@ class BaseSettings:
             return cls.__children[name]()
         except KeyError:
             raise ValueError(
-                f'Could not find Settings class for mode {base!r} '
-                f'(Known: {", ".join(cls.__children)})',
+                f'Could not find Settings class for mode {base!r} ' f'(Known: {", ".join(cls.__children)})',
             )
 
     def getattr_factory(self):
@@ -63,7 +62,8 @@ class BaseSettings:
 
         :return: function suitable for module-level ``__getattr__``
         """
-        def __getattr__(key, self=self):
+
+        def __getattr__(key, self=self):  # noqa: N807
             if not key.isupper():
                 raise AttributeError(key)
             return getattr(self, key)
@@ -79,11 +79,15 @@ class BaseSettings:
 
         pkg = getmodule(self.__class__)
 
-        def __dir__(pkg=pkg):
+        def __dir__(pkg=pkg):  # noqa: N807
+            # fmt: off
             return [
-                x for x in vars(pkg).keys() if x.isupper()
+                x for x in vars(pkg).keys()
+                if x.isupper()
             ] + [
-                x for x in dir(self) if x.isupper()
+                x for x in dir(self)
+                if x.isupper()
             ]
+            # fmt: on
 
         return __dir__
