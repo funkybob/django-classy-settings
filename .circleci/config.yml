@@ -21,17 +21,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Poetry Install..."
-          command: "poetry install --no-ansi"
+          name: "Install..."
+          command: "pip install -e .[dev]"
       - run:
           name: "Install Django..."
-          command: "poetry run pip install 'Django~=<< parameters.django-version >>'"
+          command: "pip install -U 'Django~=<< parameters.django-version >>'"
       - run:
           name: "Test"
-          command: "poetry run coverage run"
+          command: "coverage run"
       - run:
           name: "Report"
-          command: "poetry run coverage report"
+          command: "coverage report"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows

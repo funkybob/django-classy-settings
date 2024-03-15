@@ -6,7 +6,7 @@ from django.utils.functional import cached_property
 from . import cast
 from .urls import parse_dburl
 
-__all__ = ['env']
+__all__ = ["env"]
 
 # Target supported env types:
 # + str : noop
@@ -19,7 +19,7 @@ __all__ = ['env']
 # - Cache Config: db-url
 
 
-class env:
+class env:  # noqa: N801
     """property to make environment variable based settings simpler.
 
     :param Any default: default value
@@ -40,7 +40,7 @@ class env:
         used to pre-set some defaults.
         """
         if not args and not kwargs:
-            raise TypeError('env requires positional or keyword arguments')
+            raise TypeError("env requires positional or keyword arguments")
         if not args:
             return partial(cls, **kwargs)
         return object.__new__(cls)
@@ -62,7 +62,7 @@ class env:
 
     @cached_property
     def env_name(self):
-        return "".join([self.prefix, self.key])
+        return f"{self.prefix}{self.key}"
 
     def __set_name__(self, owner, name):
         if self.key is None:

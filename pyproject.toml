@@ -1,13 +1,14 @@
-[tool.poetry]
+[project]
 name = "django-classy-settings"
-version = "3.0.5"
 description = "Simple class-based settings for Django"
-license = "BSD-2-Clause"
-authors = ["Curtis Maloney <curtis@tinbrain.net>"]
 readme = "README.md"
-homepage = "https://django-classy-settings.readthedocs.io/latest/"
-repository = "https://github.com/funkybob/django-classy-settings"
-documentation = "https://django-classy-settings.readthedocs.io/en/latest/"
+
+authors = [
+    {name = "Curtis Maloney", email = "curtis@tinbrain.net" },
+]
+
+license.text = "BSD-2-Clause"
+
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Framework :: Django",
@@ -22,25 +23,85 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: PyPy",
     "Intended Audience :: Developers",
 ]
+
+requires-python = ">= 3.7"
+
+dependencies = [
+    "django",
+]
+
+dynamic = ["version"]
+
+[project.urls]
+"Source Code" = "https://github.com/funkybob/django-classy-settings"
+"Documentation" = "https://django-classy-settings.readthedocs.io/en/latest/"
+
+[tool.setuptools.dynamic]
+version.attr = "cbs.version.__version__"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "coverage",
+    "ruff",
+    "Sphinx",
+]
+
+[tool.poetry]
+
 packages = [
     { include = "cbs" },
 ]
 
-[tool.poetry.dependencies]
-python = "^3.7"
-Django = "*"
-
-[tool.poetry.dev-dependencies]
-coverage = {extras = ["toml"], version = "^6.4.4"}
-flake8 = "^5.0.4"
-isort = "^5.10.1"
-Sphinx = "^4"
-black = "^22.8.0"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.coverage.run]
-command_line = "-m unittest"
+command_line = "-m pytest"
 branch = true
+
+[tool.ruff]
+line-length = 119
+
+[tool.ruff.lint]
+select = [
+    'E',
+    'F',
+    'W',
+    'I', # isort
+    'N',
+    'UP',
+    'S', # bandit (security)
+    'A', # builtins
+    'C', # commas
+    'C4', # comprehensions
+    'DTZ', # datetimez
+    'ISC', # implicit string concat
+    'PIE',
+    'ARG', # unused arguments
+    'PL', # pylint
+    'FLY', # f-string usages
+    'PERF',
+    'RUF', # ruff specific
+]
+
+ignore = [
+    "ISC001",  # conflicts with ruff formatter
+]
+
+fixable = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "double" # Lower chance of needing to escape; ' appears in strings more often than "
+
+docstring-code-format = false
+
+[tool.ruff.lint.isort]
+section-order = [
+    'future',
+    'standard-library',
+    'third-party',
+    'first-party',
+    'local-folder',
+]
