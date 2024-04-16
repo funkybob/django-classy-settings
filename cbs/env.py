@@ -18,7 +18,6 @@ __all__ = ['env']
 # + DB Config: db-url
 # - Cache Config: db-url
 
-
 class env:
     """property to make environment variable based settings simpler.
 
@@ -31,6 +30,9 @@ class env:
     :param func cast: Function to cast ``str`` values.
 
     """
+
+    class Required:
+        pass
 
     PREFIX = ""
 
@@ -54,7 +56,7 @@ class env:
         self.key = key
         self.prefix = prefix or self.PREFIX
 
-        if callable(getter):
+        if getter is not self.Required and callable(getter):
             self.getter = getter
         else:
             self.getter = None
@@ -76,6 +78,8 @@ class env:
             value = os.environ[self.env_name]
         except KeyError:
             if self.getter is None:
+                if self.default is self.Required:
+                    raise ValueError(f"Environment varariable {self.env_name} is required but not set.")
                 value = self.default
             else:
                 try:
