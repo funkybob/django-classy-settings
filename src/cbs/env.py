@@ -32,6 +32,9 @@ class env:  # noqa: N801
 
     """
 
+    class Required:
+        pass
+
     PREFIX = ""
 
     def __new__(cls, *args, **kwargs):
@@ -54,7 +57,7 @@ class env:  # noqa: N801
         self.key = key
         self.prefix = prefix or self.PREFIX
 
-        if callable(getter):
+        if getter is not self.Required and callable(getter):
             self.getter = getter
         else:
             self.getter = None
@@ -76,6 +79,8 @@ class env:  # noqa: N801
             value = os.environ[self.env_name]
         except KeyError:
             if self.getter is None:
+                if self.default is self.Required:
+                    raise ValueError(f"Environment varariable {self.env_name} is required but not set.")
                 value = self.default
             else:
                 try:
