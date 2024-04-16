@@ -39,6 +39,15 @@ class TestPartial(EnvTestCase):
         self.assertEqual(Settings().SETTING, "override")
 
 
+class TestRequired(EnvTestCase):
+    def test_required(self):
+        TEST = env(env.Required)
+        TEST.key = 'TEST'   # This is normally set via __set_name__
+
+        with self.assertRaises(ValueError, msg="Env var TEST is required but not set"):
+            TEST()
+
+
 class TestCallable(EnvTestCase):
     def test_default(self):
         TEST = env("default", key="TEST")
