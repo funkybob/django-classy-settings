@@ -58,6 +58,9 @@ class BaseSettings:
                     "try `pip install django-classy-settings[environ]`"
                 )
 
+            if not os.path.exists(env_path):
+                raise ValueError(f"'{env_path}' does not exist")
+
             env = environ.Env()
             env.read_env(env_path)
             base = env.str(env)
