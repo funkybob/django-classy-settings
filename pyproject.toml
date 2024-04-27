@@ -37,6 +37,9 @@ isort = "^5.10.1"
 Sphinx = "^4"
 black = "^22.8.0"
 
+[tool.poetry.extras]
+environ = ["django-environ"]
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
