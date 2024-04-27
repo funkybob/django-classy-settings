@@ -19,17 +19,18 @@ class BaseSettings:
         return val
 
     @classmethod
-    def use(cls, env="DJANGO_MODE"):
+    def use(cls, env="DJANGO_MODE", env_path=None):
         """Helper for accessing sub-classes via env var name.
 
         Gets a sub-class instance using ``get_settings_instance``, and returns
         the results of calling ``getattr__factory`` and ``dir_factory`` on it.
 
-        :param str env: Envirionment variable to get settings mode name from.
+        :param str env: Environment variable to get settings mode name from.
+        :param str env_path: the path to the file containing the environment variable, if left empty, os.environ will be used instead.
         :return: functions suitable for module-level ``__getattr__`` and
             ``__dir__``
         """
-        settings = cls.get_settings_instance(env)
+        settings = cls.get_settings_instance(env, env_path)
 
         return (
             settings.getattr_factory(),
@@ -37,7 +38,7 @@ class BaseSettings:
         )
 
     @classmethod
-    def get_settings_instance(cls, env="DJANGO_MODE"):
+    def get_settings_instance(cls, env="DJANGO_MODE", env_path=None):
         """Create an instance of the appropriate Settings sub-class.
 
         Takes the value of ``os.environ[env]``, calls ``.title()`` on it, then
@@ -48,6 +49,22 @@ class BaseSettings:
 
         """
         base = os.environ.get(env, "")
+
+        if env_path:
+            try:
+                import eniron
+            except ImportError:
+                raise ImportError(
+                    "if you want to read your environment variables from a file, "
+                    "you need to install the optional `django-environ` package"
+                    "try `pip install django-classy-settings[environ]`"
+                )
+
+            if os.path.exists(env_path):
+                env = environ.Env()
+                env.read_env(env_path)
+                base = env.str(env)
+
         name = f"{base.title()}Settings"
 
         try:
