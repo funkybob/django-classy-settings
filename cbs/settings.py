@@ -41,8 +41,9 @@ class BaseSettings:
     def get_settings_instance(cls, env="DJANGO_MODE", env_path=None):
         """Create an instance of the appropriate Settings sub-class.
 
-        Takes the value of ``os.environ[env]``, calls ``.title()`` on it, then
-        appends `"Settings"`.
+        Takes the value of ``os.environ[env]``, calls ``.title()`` on it,
+        or reads the value from the specified file in ``env_path``,
+        then appends `"Settings"`.
 
         It will then find a sub-class of that name, and return an instance of
         it.
