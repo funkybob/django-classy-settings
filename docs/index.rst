@@ -218,18 +218,18 @@ Which settings to move?
 Generally, only move settings which are either environment driven, or need
 per-mode control.
 
-Because of the precedence rules of Python's module level ``__getattr__``
-function, any settings declared outside a class can *not* be overridden by a
-class-based setting.
+.. warning::
 
-.. code-block:: python
+    Because of the precedence rules of Python's module level ``__getattr__``
+    function, any settings declared outside a class can *not* be overridden by a
+    class-based setting.
 
-    GLOBAL = "global"
+    .. code-block:: python
 
-    class Settings(BaseSettings):
-        GLOBAL = "local"  # This setting will never be used
+        GLOBAL = "global"
 
-
+        class Settings(BaseSettings):
+            GLOBAL = "local"  # This setting will never be used
 
 The `env` property
 ------------------
