@@ -14,7 +14,7 @@ API
 .. automodule:: cbs.settings
 
 .. autoclass:: cbs.settings.BaseSettings
-   :members: use, getattr_factory
+   :members:
 
 ``cbs.env``
 -----------
@@ -22,7 +22,7 @@ API
 .. automodule:: cbs.env
 
 .. autoclass:: cbs.env.env
-   :members: bool, int, dburl, list, tuple
+   :members:
 
 
 ``cbs.cast``
