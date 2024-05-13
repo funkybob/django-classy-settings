@@ -23,7 +23,7 @@ class BaseSettings:
         """Helper for accessing sub-classes via env var name.
 
         Gets a sub-class instance using ``get_settings_instance``, and returns
-        the results of calling ``getattr__factory`` and ``dir_factory`` on it.
+        the results of calling ``getattr_factory`` and ``dir_factory`` on it.
 
         :param str env: Envirionment variable to get settings mode name from.
         :return: functions suitable for module-level ``__getattr__`` and
