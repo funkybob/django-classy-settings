@@ -10,7 +10,9 @@ Features Added:
   This is useful to allow overriding Django defaults in development, and
   reverting in other configurations.
 
-3.0.5 (2024-01-??)
+- An `env` can now be explicitly marked as mandatory by using `NAME = env(env.Required)`
+
+3.0.5 (2024-03-15)
 ------------------
 
 Features Added:
