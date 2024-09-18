@@ -16,10 +16,6 @@ class Settings(BaseSettings):
     def STR_ENV(self):
         return "default"
 
-    @env
-    def STR_REQUIRED(self):
-        raise ValueError("STR_REQUIRED not set")
-
     @env.bool
     def BOOL_ENV(self):
         return False
@@ -37,6 +33,11 @@ class ProdSettings(Settings):
     @env.bool
     def BOOL_ENV(self):
         return True
+
+
+class RequiredSettings(BaseSettings):
+
+    STR_REQUIRED = env(env.Required)
 
 
 class GlobalSettings(Settings):

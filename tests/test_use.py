@@ -21,9 +21,6 @@ class TestSettingsUse(unittest.TestCase):
 
         self.assertEqual(settings.IMMEDIATE_INT, 5432)
 
-        with self.assertRaises(ValueError):
-            settings.STR_REQUIRED
-
     def test_use_prod(self):
         os.environ["DJANGO_MODE"] = "prod"
         os.environ["IMMEDIATE_INT"] = "2345"
@@ -36,6 +33,12 @@ class TestSettingsUse(unittest.TestCase):
         self.assertEqual(settings.METHOD, "False")
 
         self.assertEqual(settings.IMMEDIATE_INT, 2345)
+
+    def test_use_required(self):
+        os.environ["DJANGO_MODE"] = "required"
+
+        with self.assertRaises(ValueError):
+            importlib.reload(settings)
 
     def test_use_env(self):
         os.environ["DJANGO_MODE"] = "prod"
