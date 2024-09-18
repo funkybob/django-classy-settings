@@ -212,6 +212,18 @@ environment variable:
 .. note:: Since the registry of subclasses is on ``BaseSettings``, you can call
     ``.use()`` on any sub-class and it will behave the same.
 
+Unsetting inherited values
+==========================
+
+If for whatever reason you want to un-set an inherited setting (perhaps falling back to Django's default) you can use `BaseSettings.Unset`
+
+.. code-block:: python
+
+    class StagingSettings(Settings):
+
+        TEMPLATES = Settings.Unset
+
+
 Which settings to move?
 =======================
 

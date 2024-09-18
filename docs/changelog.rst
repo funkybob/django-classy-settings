@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+3.0.6 (2024-??-??)
+------------------
+
+Features Added:
+
+- Added `BaseSettings.Unset` to allow a class to un-set an inherited setting.
+  This is useful to allow overriding Django defaults in development, and
+  reverting in other configurations.
+
 3.0.5 (2024-01-??)
 ------------------
 

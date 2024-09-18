@@ -42,5 +42,7 @@ class ProdSettings(Settings):
 class GlobalSettings(Settings):
     GLOBAL = "local"
 
+    IMMEDIATE_INT = Settings.Unset
+
 
 __getattr__, __dir__ = BaseSettings.use()

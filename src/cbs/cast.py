@@ -17,7 +17,7 @@ def as_bool(value: str) -> bool:
         return True
     if value in ("n", "no", "off", "f", "false", "0"):
         return False
-    raise ValueError("Unrecognised value for bool: %r" % value)
+    raise ValueError(f"Unrecognised value for bool: {value !r}")
 
 
 def as_list(value: str) -> list:

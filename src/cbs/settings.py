@@ -3,10 +3,16 @@ import os
 __all__ = ["BaseSettings"]
 
 
+class Unset:
+    pass
+
+
 class BaseSettings:
     """Base class for env switchable settings configuration."""
 
     __children = {}  # noqa: RUF012
+
+    Unset = Unset
 
     def __init_subclass__(cls, **kwargs):
         cls.__children[cls.__name__] = cls
@@ -14,6 +20,8 @@ class BaseSettings:
 
     def __getattribute__(self, name):
         val = super().__getattribute__(name)
+        if val is Unset:
+            raise AttributeError(name)
         if name.isupper() and callable(val):
             val = val()
         return val
@@ -75,7 +83,7 @@ class BaseSettings:
 
         :return: function suitable for module-level ``__dir__``
         """
-        from inspect import getmodule
+        from inspect import getmodule, getmembers
 
         pkg = getmodule(self.__class__)
 
@@ -85,8 +93,9 @@ class BaseSettings:
                 x for x in vars(pkg).keys()
                 if x.isupper()
             ] + [
-                x for x in dir(self)
+                key for key, val in getmembers(self)
                 if x.isupper()
+                and val is not Unset
             ]
             # fmt: on
 
