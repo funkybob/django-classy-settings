@@ -12,6 +12,10 @@ Features Added:
 
 - An `env` can now be explicitly marked as mandatory by using `NAME = env(env.Required)`
 
+- `use()` will now `warn` when any setting on a `BaseSetting` is masked by a
+  setting defined outside a settings class.
+  Because of the rules of `__getattr__` these Class Settings would never be used.
+
 3.0.5 (2024-03-15)
 ------------------
 
