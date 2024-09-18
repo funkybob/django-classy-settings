@@ -66,3 +66,10 @@ class TestSettingsUse(unittest.TestCase):
 
         with self.assertRaises(AttributeError):
             settings.IMMEDIATE_INT
+
+    def test_warning(self):
+        os.environ["DJANGO_MODE"] = "global"
+
+        with self.assertWarns(UserWarning):
+            importlib.reload(settings)
+

@@ -1,4 +1,5 @@
 import os
+from warnings import warn
 
 __all__ = ["BaseSettings"]
 
@@ -83,20 +84,27 @@ class BaseSettings:
 
         :return: function suitable for module-level ``__dir__``
         """
-        from inspect import getmodule, getmembers
+        from inspect import getmembers, getmodule
 
         pkg = getmodule(self.__class__)
 
-        def __dir__(pkg=pkg):  # noqa: N807
-            # fmt: off
-            return [
-                x for x in vars(pkg).keys()
-                if x.isupper()
-            ] + [
-                key for key, val in getmembers(self)
-                if x.isupper()
-                and val is not Unset
-            ]
-            # fmt: on
+        package_settings = [
+            name for name in vars(pkg).keys()
+            if name.isupper()
+        ]
+
+        class_settings = [
+            name for name, value in getmembers(self)
+            if name.isupper()
+            and value is not Unset
+        ]
+
+        overlap = set(package_settings).intersection(class_settings)
+
+        if overlap:
+            warn(f"Masked settings in {self.__class__.__name__}: {overlap}")
+
+        def __dir__():  # noqa: N807
+            return package_settings + class_settings
 
         return __dir__
