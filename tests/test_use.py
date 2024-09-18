@@ -58,3 +58,11 @@ class TestSettingsUse(unittest.TestCase):
                 "(Known: Settings, ProdSettings, GlobalSettings)",
         ):
             importlib.reload(settings)
+
+    def test_unset(self):
+        os.environ["DJANGO_MODE"] = "global"
+
+        importlib.reload(settings)
+
+        with self.assertRaises(AttributeError):
+            settings.IMMEDIATE_INT
