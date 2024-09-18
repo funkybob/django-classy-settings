@@ -49,6 +49,7 @@ dev = [
     "coverage",
     "ruff",
     "Sphinx",
+    "build",
 ]
 
 [tool.poetry]
