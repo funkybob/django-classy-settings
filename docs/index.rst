@@ -183,9 +183,7 @@ might use `django-classy-settings`:
         DEBUG = False
 
         # Values that *must* be provided in the environment.
-        @env
-        def STATIC_ROOT(self):
-            raise ValueError('STATIC_ROOT not supplied!')
+        STATIC_ROOT = env(env.Required)
 
     # The `use` method will find the right sub-class of ``BaseSettings`` to use
     # Based on the value of the `DJANGO_MODE` env var.
