@@ -325,15 +325,13 @@ Mandatory environment variable
 ==============================
 
 Should you require a value to *always* be supplied by environment variable,
-have your method raise a ``ValueError``
-
+you can use the `env.Required` property:
 
 .. code-block:: python
 
     class Settings(BaseSettings):
-        @env.int
-        def REQUIRED(self):
-            raise ValueError()
+
+        REQUIRED = env(env.Required)
 
 
 Avoiding repeated prefixes
@@ -352,7 +350,7 @@ with `DJANGO_`
 
     class Settings(BaseSettings):
 
-        DEBUG = denv(True)  # Will look for DJANGO_DEBUG in env
+        DEBUG = denv.bool(True)  # Will look for DJANGO_DEBUG in env
 
 
 Now setting ``DJANGO_DEBUG=f`` will disable debug mode.
