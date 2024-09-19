@@ -1,4 +1,5 @@
 import os
+from functools import partial
 from warnings import warn
 
 __all__ = ["BaseSettings"]
@@ -23,6 +24,8 @@ class BaseSettings:
         val = super().__getattribute__(name)
         if val is Unset:
             raise AttributeError(name)
+        if isinstance(val, partial):
+            raise RuntimeError(f"{name} needs default or getter.")
         if name.isupper() and callable(val):
             val = val()
         return val
@@ -89,15 +92,17 @@ class BaseSettings:
         pkg = getmodule(self.__class__)
 
         package_settings = [
-            name for name in vars(pkg).keys()
+            name
+            for name in vars(pkg).keys()
             if name.isupper()
-        ]
+        ]  # fmt: skip
 
         class_settings = [
-            name for name, value in getmembers(self)
+            name
+            for name, value in getmembers(self)
             if name.isupper()
             and value is not Unset
-        ]
+        ]  # fmt: skip
 
         overlap = set(package_settings).intersection(class_settings)
 

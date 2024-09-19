@@ -40,6 +40,12 @@ class RequiredSettings(BaseSettings):
     STR_REQUIRED = env(env.Required)
 
 
+class IncompleteSettings(BaseSettings):
+
+    # Must have a default, or a getter (e.g. used as decorator)
+    INCOMPLETE = env(key="FOO")
+
+
 class GlobalSettings(Settings):
     GLOBAL = "local"
 

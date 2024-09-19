@@ -76,3 +76,10 @@ class TestSettingsUse(unittest.TestCase):
         with self.assertWarns(UserWarning):
             importlib.reload(settings)
 
+
+    def test_incomplete(self):
+        os.environ["DJANGO_MODE"] = "incomplete"
+
+        with self.assertRaises(RuntimeError):
+            importlib.reload(settings)
+

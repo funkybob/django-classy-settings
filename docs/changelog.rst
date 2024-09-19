@@ -1,6 +1,17 @@
 Change Log
 ==========
 
+3.0.7 (2024-??-??)
+------------------
+
+Features Added:
+
+- `env` will now raise a `RuntimeError` when configured without a default and a getter.
+  This can happen, for instance, when doing:
+  ```py
+  FOO = env(key="BAR")
+  ```
+
 3.0.6 (2024-09-18)
 ------------------
 
