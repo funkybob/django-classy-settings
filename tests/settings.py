@@ -1,4 +1,5 @@
 # File for testing __getattr__ factory
+import os
 
 from cbs import BaseSettings, env
 
@@ -52,4 +53,4 @@ class GlobalSettings(Settings):
     IMMEDIATE_INT = Settings.Unset
 
 
-__getattr__, __dir__ = BaseSettings.use()
+__getattr__, __dir__ = BaseSettings.use(default=os.environ.get("mode", ""))

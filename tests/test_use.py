@@ -34,6 +34,13 @@ class TestSettingsUse(unittest.TestCase):
 
         self.assertEqual(settings.IMMEDIATE_INT, 2345)
 
+    def test_use_default(self):
+        os.environ["mode"] = "prod"
+
+        importlib.reload(settings)
+
+        self.assertFalse(settings.DEBUG)
+
     def test_use_required(self):
         os.environ["DJANGO_MODE"] = "required"
 

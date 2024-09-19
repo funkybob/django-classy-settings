@@ -12,6 +12,8 @@ Features Added:
   FOO = env(key="BAR")
   ```
 
+- A default for `DJANGO_MODE` can now be specified when calling `Settings.use()`
+
 3.0.6 (2024-09-18)
 ------------------
 
