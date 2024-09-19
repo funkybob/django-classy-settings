@@ -31,17 +31,18 @@ class BaseSettings:
         return val
 
     @classmethod
-    def use(cls, env="DJANGO_MODE"):
+    def use(cls, default="", env="DJANGO_MODE"):
         """Helper for accessing sub-classes via env var name.
 
         Gets a sub-class instance using ``get_settings_instance``, and returns
         the results of calling ``getattr_factory`` and ``dir_factory`` on it.
 
+        :param str default: Default value for DJANGO_MODE if not set.
         :param str env: Envirionment variable to get settings mode name from.
         :return: functions suitable for module-level ``__getattr__`` and
             ``__dir__``
         """
-        settings = cls.get_settings_instance(env)
+        settings = cls.get_settings_instance(default, env)
 
         return (
             settings.getattr_factory(),
@@ -49,17 +50,17 @@ class BaseSettings:
         )
 
     @classmethod
-    def get_settings_instance(cls, env="DJANGO_MODE"):
+    def get_settings_instance(cls, default="", env="DJANGO_MODE"):
         """Create an instance of the appropriate Settings sub-class.
 
         Takes the value of ``os.environ[env]``, calls ``.title()`` on it, then
-        appends `"Settings"`.
+        appends `"Settings"`. If there is no value in ``os.environ``, it will
+        use ``default`` instead.
 
         It will then find a sub-class of that name, and return an instance of
         it.
-
         """
-        base = os.environ.get(env, "")
+        base = os.environ.get(env, default)
         name = f"{base.title()}Settings"
 
         try:

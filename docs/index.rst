@@ -210,6 +210,21 @@ environment variable:
 .. note:: Since the registry of subclasses is on ``BaseSettings``, you can call
     ``.use()`` on any sub-class and it will behave the same.
 
+Overriding the default
+======================
+
+Normally if `DJANGO_MODE` is not set, it will default to looking for ``Settings``.
+
+You can override the default fallback by passing the value to `use()`
+
+.. code-block:: python
+
+    __getattr__, __dir__ = Settings.use(default="dev")
+
+
+This way you can have a common base ``Settings`` class, and a separate
+``DevSettings`` with overrides for development.
+
 Unsetting inherited values
 ==========================
 
@@ -219,7 +234,7 @@ If for whatever reason you want to un-set an inherited setting (perhaps falling 
 
     class StagingSettings(Settings):
 
-        TEMPLATES = Settings.Unset
+        LOGGING = Settings.Unset
 
 
 Which settings to move?
