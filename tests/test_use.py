@@ -82,7 +82,7 @@ class TestSettingsUse(unittest.TestCase):
 
         with self.assertWarns(UserWarning):
             importlib.reload(settings)
-
+            dir(settings)
 
     def test_incomplete(self):
         os.environ["DJANGO_MODE"] = "incomplete"

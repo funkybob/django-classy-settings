@@ -92,12 +92,6 @@ class BaseSettings:
 
         pkg = getmodule(self.__class__)
 
-        package_settings = [
-            name
-            for name in vars(pkg).keys()
-            if name.isupper()
-        ]  # fmt: skip
-
         class_settings = [
             name
             for name, value in getmembers(self)
@@ -105,12 +99,18 @@ class BaseSettings:
             and value is not Unset
         ]  # fmt: skip
 
-        overlap = set(package_settings).intersection(class_settings)
-
-        if overlap:
-            warn(f"Masked settings in {self.__class__.__name__}: {overlap}")
-
         def __dir__():  # noqa: N807
+            package_settings = [
+                name
+                for name in vars(pkg).keys()
+                if name.isupper()
+            ]  # fmt: skip
+
+            overlap = set(package_settings).intersection(class_settings)
+
+            if overlap:
+                warn(f"Masked settings in {self.__class__.__name__}: {overlap}")
+
             return package_settings + class_settings
 
         return __dir__

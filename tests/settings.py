@@ -54,3 +54,6 @@ class GlobalSettings(Settings):
 
 
 __getattr__, __dir__ = BaseSettings.use(default=os.environ.get("mode", ""))
+
+
+LATE_SETTING = True

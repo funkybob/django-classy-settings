@@ -14,6 +14,9 @@ Features Added:
 
 - A default for `DJANGO_MODE` can now be specified when calling `Settings.use()`
 
+- `__dir__` now re-inspects the module every time it's invoked for global properties.
+  This avoids hiding any values defined after `.use()` is called.
+
 3.0.6 (2024-09-18)
 ------------------
 
