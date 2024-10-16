@@ -28,7 +28,6 @@ class TestProperty(EnvTestCase):
 
 class TestPartial(EnvTestCase):
     def test_prefix(self):
-
         denv = env["DJANGO_"]
 
         class Settings:
@@ -42,7 +41,7 @@ class TestPartial(EnvTestCase):
 class TestRequired(EnvTestCase):
     def test_required(self):
         TEST = env(env.Required)
-        TEST.key = 'TEST'   # This is normally set via __set_name__
+        TEST.key = "TEST"  # This is normally set via __set_name__
 
         with self.assertRaises(ValueError, msg="Env var TEST is required but not set"):
             TEST()
@@ -57,7 +56,7 @@ class TestCallable(EnvTestCase):
         self.assertEqual(TEST(), "test")
 
     def test_no_arguments(self):
-        '''
+        """
         env() can't sensibly be called without _any_ arguments.
 
         Proper usage is one of:
@@ -71,7 +70,7 @@ class TestCallable(EnvTestCase):
 
             @env(key=value, ...)
             def foo(...):
-        '''
+        """
         with self.assertRaises(TypeError):
             env()
 
@@ -171,7 +170,6 @@ class TestMethod(EnvTestCase):
 class EnvBoolTest(EnvTestCase):
     def test_immediate(self):
         class Settings:
-
             DEBUG = env.bool(False)
 
         os.environ["DEBUG"] = "y"
@@ -199,28 +197,22 @@ class EnvBoolTest(EnvTestCase):
         # True values
         for tval in ("y", "yes", "on", "t", "true", "1"):
             os.environ["SETTING"] = tval
-            del s.SETTING
             self.assertTrue(s.SETTING)
 
             os.environ["SETTING"] = tval.title()
-            del s.SETTING
             self.assertTrue(s.SETTING)
 
             os.environ["SETTING"] = tval.upper()
-            del s.SETTING
             self.assertTrue(s.SETTING)
 
         for fval in ("n", "no", "off", "f", "false", "0"):
             os.environ["SETTING"] = fval
-            del s.SETTING
             self.assertFalse(s.SETTING)
 
             os.environ["SETTING"] = fval.title()
-            del s.SETTING
             self.assertFalse(s.SETTING)
 
             os.environ["SETTING"] = fval.upper()
-            del s.SETTING
             self.assertFalse(s.SETTING)
 
     def test_env_bool_set_invalid(self):

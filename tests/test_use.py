@@ -64,8 +64,7 @@ class TestSettingsUse(unittest.TestCase):
 
         with self.assertRaises(
             ValueError,
-            msg="Could not find Settings class for mode 'mystery' "
-                "(Known: Settings, ProdSettings, GlobalSettings)",
+            msg="Could not find Settings class for mode 'mystery' (Known: Settings, ProdSettings, GlobalSettings)",
         ):
             importlib.reload(settings)
 
@@ -89,4 +88,3 @@ class TestSettingsUse(unittest.TestCase):
 
         with self.assertRaises(RuntimeError):
             importlib.reload(settings)
-
