@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Django Classy Settings documentation build configuration file, created by
 # sphinx-quickstart on Thu Jul 24 13:53:10 2014.
@@ -12,8 +11,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
 import os
+import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the

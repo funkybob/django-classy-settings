@@ -5,10 +5,7 @@ from cbs.urls import parse_dburl
 
 class TestUrlParse(TestCase):
     def test_simple(self):
-        result = parse_dburl(
-            "postgres://user:password@hostname:1234/dbname"
-            "?conn_max_age=15&local_option=test"
-        )
+        result = parse_dburl("postgres://user:password@hostname:1234/dbname?conn_max_age=15&local_option=test")
 
         self.assertEqual(
             result,

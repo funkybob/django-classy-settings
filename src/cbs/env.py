@@ -91,7 +91,6 @@ class env:  # noqa: N801
         if self.cast and isinstance(value, str):
             value = self.cast(value)
 
-        obj.__dict__[self.key] = value
         return value
 
     def __call__(self):
