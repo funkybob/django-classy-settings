@@ -80,7 +80,7 @@ class env:  # noqa: N801
         except KeyError:
             if self.getter is None:
                 if self.default is self.Required:
-                    raise ValueError(f"Environment varariable {self.env_name} is required but not set.")
+                    raise ValueError(f"Environment variable {self.env_name} is required but not set.")
                 value = self.default
             else:
                 try:
