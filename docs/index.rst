@@ -165,7 +165,7 @@ might use `django-classy-settings`:
                 'django.contrib.messages.middleware.MessageMiddleware',
                 'django.middleware.clickjacking.XFrameOptionsMiddleware',
                 # Conditionally include a middleware
-                'debug_toolbar.middleware.DebugToolbarMiddleware' if self.DEBUG else False,
+                'debug_toolbar.middleware.DebugToolbarMiddleware' if self.DEBUG else None,
             ]))
 
         # Parse the URL into a database config dict.
