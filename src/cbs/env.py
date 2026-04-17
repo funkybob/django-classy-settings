@@ -23,10 +23,15 @@ class env:  # noqa: N801
     """property to make environment variable based settings simpler.
 
     :param Any default: default value
-        If it's a string, it will be passed to the ``cast`` function
+
+        If it's a string, it will be passed to the ``cast`` function.
+
         When used as a decorator, this is the method.
+
     :param str key: Override environment variable name
+
         (Defaults to class attribute name)
+
     :param str prefix: Prefix to ``key`` when looking up ``os.environ``
     :param func cast: Function to cast ``str`` values.
 

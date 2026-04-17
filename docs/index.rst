@@ -41,7 +41,7 @@ might use `django-classy-settings`:
 .. code-block:: python
    :caption: settings.py
    :linenos:
-   :emphasize-lines: 15,89-132,135-143,145-147
+   :emphasize-lines: 15,89-132,135-143,145
 
     """
     Django settings for dummy project.
@@ -257,7 +257,7 @@ per-mode control.
             GLOBAL = "local"  # This setting will never be used
 
 The `env` property
-------------------
+==================
 
 To help with environment driven settings there is the `env` property decorator.
 
@@ -275,6 +275,9 @@ The simplest use case is with an immediate value:
 In this case, if the `FOO` environment variable is set, then ``settings.FOO``
 will yield its value.  Otherwise, it will be ``"default"``.
 
+Overriding the env var name
+---------------------------
+
 You can optionally override the environment variable name to look up by passing
 a ``key`` argument:
 
@@ -282,7 +285,10 @@ a ``key`` argument:
 
     class Settings(BaseSettings):
 
-        FOO = env('default', key='BAR')
+        FOO = env('default', key='BAR')  # looks up env var BAR
+
+Adding a prefix
+---------------
 
 Additionally, you can define a prefix for the environment variable:
 
@@ -291,6 +297,17 @@ Additionally, you can define a prefix for the environment variable:
     class Settings(BaseSettings):
 
         FOO = env('default', prefix='MY_')  # looks up env var MY_FOO
+
+This works independant of the `key`, so if you specify both they will both take effect.
+
+.. code-block:: python
+
+    class Settings(BaseSettings):
+
+        FOO = env('default', key='BAR', prefix='MY_')  # looks up env var MY_BAR
+
+Casting the type
+----------------
 
 If you need a type other than ``str``, you can pass a ``cast`` callable, which
 will be passed the value.
